@@ -11,9 +11,9 @@ public class ShipController : MonoBehaviour
 {
     Rigidbody2D m_rigidBody;
     Transform m_transform;
-    InputSet m_Inputs;
-    Vector2 m_AimVelocity;
-    Vector2 Velocity;
+    InputSet m_inputs;
+    Vector2 m_targetVelocity;
+    Vector2 m_velocity;
     bool Firing;
     public float MAX_ACCELERATION;
     public float MAX_SPEED;
@@ -23,7 +23,6 @@ public class ShipController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_rigidBody = GetComponent<Rigidbody2D>();
         m_transform = GetComponent<Transform>();
     }
 
@@ -56,7 +55,7 @@ public class ShipController : MonoBehaviour
         if (Input.mousePosition.x > Screen.width || Input.mousePosition.y > Screen.height) {mouseOnScreen = false;}
         else {mouseOnScreen = true;}
 
-        m_Inputs = new InputSet(){
+        m_inputs = new InputSet(){
             x = x,
             y = y,
             firing = Input.GetKey("space"),
@@ -82,24 +81,25 @@ public class ShipController : MonoBehaviour
 
     void DoMovement()
     {
-        m_AimVelocity = new Vector2(m_Inputs.x * MAX_SPEED, m_Inputs.y * MAX_SPEED);
-        m_rigidBody.velocity = Vector2.MoveTowards(m_rigidBody.velocity, m_AimVelocity, MAX_ACCELERATION);
+        m_targetVelocity = new Vector2(m_inputs.x * MAX_SPEED, m_inputs.y * MAX_SPEED);
+        m_velocity = Vector2.MoveTowards(m_velocity, m_targetVelocity, MAX_ACCELERATION);
 
-        Firing = m_Inputs.firing;
+        Firing = m_inputs.firing;
 
-        if (m_Inputs.mouseOnScreen)
+        if (m_velocity != new Vector2(0, 0))
         {
-            RotateTowards(m_Inputs.mouseDirection + 90, ROTATION_SPEED);
+            RotateTowards(VectorToAngle(m_velocity), ROTATION_SPEED);
         }
+        m_transform.position += new Vector3(m_velocity.x * Time.deltaTime, m_velocity.y * Time.deltaTime);
     }
 
     void RotateTowards(float targetRotation, float speed)
     {
-            float toRotate = targetRotation - m_transform.rotation.eulerAngles.z;
-            if (toRotate > 180) {toRotate -= 360;}
-            else if (toRotate < -180) {toRotate += 360;}
-            toRotate = toRotate * speed;
-            m_transform.Rotate(Vector3.forward, toRotate);
+        float toRotate = targetRotation - m_transform.rotation.eulerAngles.z;
+        if (toRotate > 180) {toRotate -= 360;}
+        else if (toRotate < -180) {toRotate += 360;}
+        toRotate *= speed;
+        m_transform.Rotate(Vector3.forward, toRotate);
     }
 
 }
