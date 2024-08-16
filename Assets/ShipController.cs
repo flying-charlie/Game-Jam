@@ -15,9 +15,12 @@ public class ShipController : MonoBehaviour
     Vector2 m_targetVelocity;
     Vector2 m_velocity;
     bool Firing;
+    public float MASS;
     public float MAX_ACCELERATION;
     public float MAX_SPEED;
-    public float ROTATION_SPEED;
+    public float ROTATION_SCALE;
+    public float ROTATION_MIN;
+    float m_rotationSpeed;
     Vector2 cameraPos = new(0, 0);
 
     // Start is called before the first frame update
@@ -29,7 +32,7 @@ public class ShipController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        m_rotationSpeed = (float)(ROTATION_SCALE / MASS + ROTATION_MIN); //move this to OnMassChange
     }
 
     void FixedUpdate()
@@ -88,7 +91,7 @@ public class ShipController : MonoBehaviour
 
         if (m_velocity != new Vector2(0, 0))
         {
-            RotateTowards(VectorToAngle(m_velocity), ROTATION_SPEED);
+            RotateTowards(VectorToAngle(m_velocity), m_rotationSpeed);
         }
         m_transform.position += new Vector3(m_velocity.x * Time.deltaTime, m_velocity.y * Time.deltaTime);
     }
