@@ -1,4 +1,0 @@
-repository "Game Jam@flying_bee@cloud"
-  path "/"
-    br "/main"
-    co "/main"
