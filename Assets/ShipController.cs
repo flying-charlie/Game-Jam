@@ -55,6 +55,13 @@ public class ShipController : MonoBehaviour
             DoMovement();
         }
 
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            GameObject tile = transform.GetChild(i).gameObject;
+            tile.GetComponent<TileController>().attachedUpdate(new tileUpdateData() {
+                inputs = m_inputs
+            });
+        }
     }
 
     /// <summary>

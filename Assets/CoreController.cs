@@ -5,17 +5,17 @@ using UnityEngine;
 
 public class CoreController : TileController
 {
-    public override void OnMouseDrag()
+    protected override void OnMouseDrag()
     {
 
     }
 
-    public override void OnStartDrag()
+    protected override void OnStartDrag()
     {
 
     }
 
-    public override void OnEndDrag()
+    protected override void OnEndDrag()
     {
 
     }

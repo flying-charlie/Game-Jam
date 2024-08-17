@@ -10,3 +10,8 @@ public struct InputSet
     public float mouseDirection;
     public bool mouseOnScreen;
 }
+
+public struct tileUpdateData
+{
+    public InputSet inputs;
+}

@@ -14,7 +14,7 @@ public class TileController : MonoBehaviour // , Tiling.iTile
     public float POSITION_SNAP_SPEED;
 
 
-    public virtual void OnMouseDrag()
+    protected virtual void OnMouseDrag()
     {
         if (!dragging)
         {
@@ -24,12 +24,12 @@ public class TileController : MonoBehaviour // , Tiling.iTile
         transform.position = Utils.GetMousePosition();
     }
 
-    public virtual void OnStartDrag()
+    protected virtual void OnStartDrag()
     {
         Detach();
     }
 
-    public virtual void OnEndDrag()
+    protected virtual void OnEndDrag()
     {
         Debug.Log("Drag ended");
         Vector2 relativePos = m_shipController.worldPosToGridPos(transform.position);
@@ -70,7 +70,7 @@ public class TileController : MonoBehaviour // , Tiling.iTile
     }
 
     // Start is called before the first frame update
-    void Start()
+    protected void Start()
     {
         if (transform.parent == null)
         {
@@ -89,6 +89,10 @@ public class TileController : MonoBehaviour // , Tiling.iTile
     {
         
     }
+    public virtual void attachedUpdate(tileUpdateData data) 
+    {
+
+    } 
 
     // public Vector2Int gridPosition{get{
     //     return m_gridPos;

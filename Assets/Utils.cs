@@ -25,7 +25,7 @@ static class Utils
 
     public static float GetAngleFromTo(Vector2 from, Vector2 to)
     {  
-        Vector2 relativeVector = to - from; //get the vector representing the to's position relative to from
+        Vector2 relativeVector = to - from; //get the vector representing the to's position relative to from's
         return VectorToAngle(relativeVector);
     }
 
@@ -35,9 +35,9 @@ static class Utils
         return angleRadians * Mathf.Rad2Deg;   //convert to degrees
     }
 
-    public static void RotateTowards(Transform transform, float targetRotation, float speed, float maxSpeed = float.PositiveInfinity)
+    public static void RotateTowards(Transform myTransform, float targetRotation, float speed, float maxSpeed = float.PositiveInfinity)
     {
-        float toRotate = targetRotation - transform.rotation.eulerAngles.z;
+        float toRotate = targetRotation - myTransform.rotation.eulerAngles.z;
         if (toRotate > 180) {toRotate -= 360;}
         else if (toRotate < -180) {toRotate += 360;}
         toRotate *= speed;
@@ -49,7 +49,7 @@ static class Utils
         {
             toRotate = -maxSpeed;
         }
-        transform.Rotate(Vector3.forward, toRotate);
+        myTransform.Rotate(Vector3.forward, toRotate);
     }
 
     public static void RotateTowardsLocal(Transform transform, float targetRotation, float speed, float maxSpeed = float.PositiveInfinity)
