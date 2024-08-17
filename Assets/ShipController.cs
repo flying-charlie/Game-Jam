@@ -19,8 +19,8 @@ public class ShipController : MonoBehaviour
     float m_speed;
     float m_mass;
     shipConfig config;
-    public float m_maxAcceleration;
-    public float m_maxSpeed;
+    float m_maxAcceleration;
+    float m_maxSpeed;
     float m_rotationSpeed;
     float m_maxRotationSpeed;
     public float m_thrust;
@@ -30,6 +30,7 @@ public class ShipController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        config = GameObject.FindGameObjectWithTag("config").GetComponent<Config>().shipCfg;
         OnMassChange();
     }
 

@@ -9,7 +9,7 @@ public class Config : MonoBehaviour
     public shipConfig shipCfg;
     public GameObject basicBullet;
 
-    void Start()
+    public Config()
     {
         gunCfg.Add("basic", new GunConfig(){
             reloadTime = 1,
@@ -29,7 +29,7 @@ public class Config : MonoBehaviour
             accelerationScale = 0.1F,
             maxSpeedScale = 0.2F,
             accelerationMin = 1,
-            maxSpeedMin = 5,
+            maxSpeedMin = 0.5F,
         };
     }
 }
