@@ -5,20 +5,16 @@ using UnityEngine.UIElements;
 
 public class GunTileController : TileController
 {   
-    public GameObject bullet;
+    public string configId;
     GunController m_gunController;
-    public float fireAngleTolerance;
-    public GunConfig config;
+    GunConfig config;
     bool m_firing = false;
     float timeSinceLastFire;
 
     new void Start()
     {
         m_gunController = GetComponentInChildren<GunController>();
-        m_gunController.bullet = bullet;
-        config.rotationSpeed = 0.5F;
-        config.reloadTime = 1;
-        config.bulletSpeed = 10;
+        config = GameObject.FindGameObjectWithTag("config").GetComponent<Config>().gunCfg[configId];
         base.Start();
     }
 
@@ -34,7 +30,7 @@ public class GunTileController : TileController
         m_gunController.RotateTowards(targetAngle, config.rotationSpeed);
 
         timeSinceLastFire += Time.deltaTime;
-        if (Mathf.Abs(((targetAngle + 360) % 360) - m_gunController.transform.rotation.eulerAngles.z) < fireAngleTolerance && m_firing && timeSinceLastFire > config.reloadTime)
+        if (Mathf.Abs(((targetAngle + 360) % 360) - m_gunController.transform.rotation.eulerAngles.z) < config.fireAngleTolerance && m_firing && timeSinceLastFire > config.reloadTime)
         {
             Fire();
         }
@@ -43,9 +39,7 @@ public class GunTileController : TileController
     void Fire()
     {
         timeSinceLastFire = 0;
-        m_gunController.Fire(new BulletConfig(){
-            speed = config.bulletSpeed
-        });
+        m_gunController.Fire(config.bullet);
     }
 }
 
@@ -53,5 +47,6 @@ public struct GunConfig
 {
     public float reloadTime;
     public float rotationSpeed;
-    public float bulletSpeed;
+    public float fireAngleTolerance;
+    public GameObject bullet;
 }

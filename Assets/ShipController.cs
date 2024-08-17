@@ -17,43 +17,42 @@ public class ShipController : MonoBehaviour
     Vector2 m_targetVelocity;
     Vector2 m_velocity;
     float m_speed;
-    bool Firing;
-    public float MASS;
+    float m_mass;
+    shipConfig config;
     public float MAX_ACCELERATION;
     public float MAX_SPEED;
     public float ROTATION_SCALE;
     public float ROTATION_MIN;
-    public bool ALTERNATE_MOVEMENT;
     float m_rotationSpeed;
     float m_maxRotationSpeed;
+    float m_thrust;
     public float GRID_SCALE;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        OnMassChange();
     }
 
     // Update is called once per frame
     void Update()
     {
-        m_rotationSpeed = (float)(ROTATION_SCALE / MASS + ROTATION_MIN); //move this to OnMassChange
-        m_maxRotationSpeed = (float)(m_rotationSpeed * 90); //move this to OnMassChange
+        
+    }
+
+    public void OnMassChange()
+    {
+        m_mass = transform.childCount;
+        m_speed = 0;
+        m_rotationSpeed = (float)(config.rotationScale / m_mass + config.rotationMin);
+        m_maxRotationSpeed = (float)(m_rotationSpeed * 90);
     }
 
     void FixedUpdate()
     {
         GetInputs();
-
-        if (ALTERNATE_MOVEMENT)
-        {
-            DoMovement2();
-        }
-        else
-        {
-            DoMovement();
-        }
+        DoMovement();
 
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -89,34 +88,14 @@ public class ShipController : MonoBehaviour
             };
     }
 
-
     /// <summary>
-    /// Calculate and perform movement and rotation. Rotation is cosmetic.
+    /// Calculate and perform movement and rotation. Rotation speed affects turning time.
     /// </summary>
     void DoMovement()
     {
         m_targetVelocity = new Vector2(m_inputs.x * MAX_SPEED, m_inputs.y * MAX_SPEED);
-        m_velocity = Vector2.MoveTowards(m_velocity, m_targetVelocity, MAX_ACCELERATION);
-
-        Firing = m_inputs.firing;
-
-        if (m_velocity != new Vector2(0, 0))
-        {
-            Utils.RotateTowards(transform, Utils.VectorToAngle(m_velocity), m_rotationSpeed * 2, m_maxRotationSpeed);  // rotation speed is multiplied by 2 here to compensate the additional velocity lerp
-        }
-        transform.position += new Vector3(m_velocity.x * Time.deltaTime, m_velocity.y * Time.deltaTime);
-    }
-
-    /// <summary>
-    /// Calculate and perform movement and rotation. Rotation speed affects turning time.
-    /// </summary>
-    void DoMovement2()
-    {
-        m_targetVelocity = new Vector2(m_inputs.x * MAX_SPEED, m_inputs.y * MAX_SPEED);
         float targetSpeed = m_inputs.x != 0 || m_inputs.y != 0 ? MAX_SPEED : 0;
         m_speed = (targetSpeed - m_speed) * MAX_ACCELERATION + m_speed;
-
-        Firing = m_inputs.firing; 
 
         if (m_targetVelocity != new Vector2(0, 0))
         {
@@ -159,4 +138,10 @@ public class ShipController : MonoBehaviour
         Debug.Log(transform.InverseTransformPoint(worldPos));
         return transform.InverseTransformPoint(worldPos);
     }
+}
+
+public struct shipConfig
+{
+    public float rotationScale;
+    public float rotationMin;
 }

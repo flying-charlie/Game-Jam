@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
-    public int DESPAWN_TIME;
-    int despawnTime;
-    public BulletConfig config;
+    public float DESPAWN_TIME;
+    float despawnTime;
+    BulletConfig config;
+    public string configId;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        config = GameObject.FindGameObjectWithTag("config").GetComponent<Config>().bulletCfg[configId];
     }
 
     // Update is called once per frame
@@ -23,8 +24,8 @@ public class BulletController : MonoBehaviour
     void FixedUpdate()
     {
         DoMovement();
-        despawnTime += 1;
-        if (despawnTime == DESPAWN_TIME)
+        despawnTime += Time.deltaTime;
+        if (despawnTime > DESPAWN_TIME)
         {
             Destroy(gameObject);
         }     
@@ -44,4 +45,5 @@ public class BulletController : MonoBehaviour
 public struct BulletConfig
 {
     public float speed;
+    public float damage;
 }
