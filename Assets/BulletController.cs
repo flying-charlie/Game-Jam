@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
+    public int DESPAWN_TIME;
+    int despawnTime;
     public BulletConfig config;
 
     // Start is called before the first frame update
@@ -15,12 +17,17 @@ public class BulletController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void FixedUpdate()
     {
-        DoMovement();     
+        DoMovement();
+        despawnTime += 1;
+        if (despawnTime == DESPAWN_TIME)
+        {
+            Destroy(gameObject);
+        }     
     }
 
     void DoMovement()
