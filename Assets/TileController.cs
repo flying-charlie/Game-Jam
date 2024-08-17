@@ -103,4 +103,8 @@ public class TileController : MonoBehaviour // , Tiling.iTile
     // }}
 
     // public IEnumerable<Vector2Int> openConnections => throw new System.NotImplementedException();
+    void OnCollisionEnter2D(Collision2D collision2D)
+    {
+        Destroy(gameObject);
+    }
 }
