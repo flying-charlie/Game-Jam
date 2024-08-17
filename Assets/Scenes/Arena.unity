@@ -609,10 +609,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93275e0be78f0214ba48d49917a099a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_maxAcceleration: 0
-  m_maxSpeed: 0
-  m_thrust: 0
-  GRID_SCALE: 0
+  m_thrust: 10
+  GRID_SCALE: 1
 --- !u!4 &531642313
 Transform:
   m_ObjectHideFlags: 0
