@@ -122,6 +122,51 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &88291385
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 88291387}
+  - component: {fileID: 88291386}
+  m_Layer: 0
+  m_Name: Config
+  m_TagString: config
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &88291386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 88291385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7dd768695e4ca54e9d8bf661271ea02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basicBullet: {fileID: 4401392891142851056, guid: 31c79171c8208a448a0c7bc22a531b61, type: 3}
+--- !u!4 &88291387
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 88291385}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.18186656, y: -0.12543496, z: -0.0033988059}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &236843210
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -467,12 +512,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93275e0be78f0214ba48d49917a099a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MASS: 10
-  MAX_ACCELERATION: 0.1
-  MAX_SPEED: 10
-  ROTATION_SCALE: 0.5
-  ROTATION_MIN: 0.02
-  ALTERNATE_MOVEMENT: 1
+  m_maxAcceleration: 0
+  m_maxSpeed: 0
+  m_thrust: 0
   GRID_SCALE: 0
 --- !u!4 &531642313
 Transform:
@@ -909,6 +951,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GunTile 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9158597550563950057, guid: e3817756b0391b3499359aca69523c59, type: 3}
+      propertyPath: configId
+      value: basic
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1127,6 +1173,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GunTile
       objectReference: {fileID: 0}
+    - target: {fileID: 9158597550563950057, guid: e3817756b0391b3499359aca69523c59, type: 3}
+      propertyPath: configId
+      value: basic
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1147,3 +1197,4 @@ SceneRoots:
   - {fileID: 7316369904138790400}
   - {fileID: 2039910043}
   - {fileID: 823717604919154200}
+  - {fileID: 88291387}
