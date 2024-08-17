@@ -7,6 +7,7 @@ public class FollowCam : MonoBehaviour
     public GameObject Follow;
     Transform m_transform;
     public float STICKYNESS;
+    public Vector3 mousePos;
 
     // Start is called before the first frame update
     void Start()
@@ -17,7 +18,7 @@ public class FollowCam : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
     void FixedUpdate()

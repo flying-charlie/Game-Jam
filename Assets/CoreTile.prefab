@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 7316894279051479299}
   - component: {fileID: -2250278132834229893}
   - component: {fileID: -4129441417229270293}
-  - component: {fileID: 8040641047236405541}
+  - component: {fileID: -4904685948116762110}
   m_Layer: 0
-  m_Name: Tile
+  m_Name: CoreTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -121,7 +121,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -5177388603050735206, guid: 8884154dfe85442a3a3578be807dbcdf, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.44914895, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -131,7 +131,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8040641047236405541
+--- !u!114 &-4904685948116762110
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -140,10 +140,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 5790698615419295423}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5fdf82328b0056439a03b20ffbc7bdc, type: 3}
+  m_Script: {fileID: 11500000, guid: 586e941a5ac48fe4584c06713f3fa27c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ship: {fileID: 0}
-  attached: 0
   ROTATION_SNAP_SPEED: 0
   POSITION_SNAP_SPEED: 0

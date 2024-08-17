@@ -1,16 +1,18 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Unity.Collections;
 using Unity.VisualScripting;
+using UnityEditor.U2D.Aseprite;
 using UnityEngine;
+using UnityEngine.Diagnostics;
+using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
 
 public class ShipController : MonoBehaviour
 {
-    Rigidbody2D m_rigidBody;
-    Transform m_transform;
     InputSet m_inputs;
     Vector2 m_targetVelocity;
     Vector2 m_velocity;
@@ -24,12 +26,13 @@ public class ShipController : MonoBehaviour
     public bool ALTERNATE_MOVEMENT;
     float m_rotationSpeed;
     float m_maxRotationSpeed;
-    Vector2 cameraPos = new(0, 0);
+    public float GRID_SCALE;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        m_transform = GetComponent<Transform>();
+        
     }
 
     // Update is called once per frame
@@ -51,8 +54,7 @@ public class ShipController : MonoBehaviour
         {
             DoMovement();
         }
-        
-        
+
     }
 
     /// <summary>
@@ -75,25 +77,11 @@ public class ShipController : MonoBehaviour
             x = x,
             y = y,
             firing = Input.GetKey("space"),
-            mouseDirection = GetMouseAngle(),
+            mouseDirection = Utils.GetMouseAngleFrom(transform.position),
             mouseOnScreen = mouseOnScreen
             };
     }
 
-    float GetMouseAngle()
-    {
-        Vector2 shipPos = new(Screen.width / 2, Screen.height / 2);
-        Vector2 mousePos = new(Input.mousePosition.x, Input.mousePosition.y);
-        
-        Vector2 relativeVector = mousePos - shipPos; //get the vector representing the mouse's position relative to the point
-        return VectorToAngle(relativeVector);
-    }
-
-    float VectorToAngle(Vector2 vector)
-    {
-        var angleRadians = Mathf.Atan2(vector.y, vector.x); //use atan2 to get the angle; Atan2 returns radians
-        return angleRadians * Mathf.Rad2Deg;   //convert to degrees
-    }
 
     /// <summary>
     /// Calculate and perform movement and rotation. Rotation is cosmetic.
@@ -107,9 +95,9 @@ public class ShipController : MonoBehaviour
 
         if (m_velocity != new Vector2(0, 0))
         {
-            RotateTowards(VectorToAngle(m_velocity), m_rotationSpeed * 2, m_maxRotationSpeed);  // rotation speed is multiplied by 2 here to compensate the additional velocity lerp
+            Utils.RotateTowards(transform, Utils.VectorToAngle(m_velocity), m_rotationSpeed * 2, m_maxRotationSpeed);  // rotation speed is multiplied by 2 here to compensate the additional velocity lerp
         }
-        m_transform.position += new Vector3(m_velocity.x * Time.deltaTime, m_velocity.y * Time.deltaTime);
+        transform.position += new Vector3(m_velocity.x * Time.deltaTime, m_velocity.y * Time.deltaTime);
     }
 
     /// <summary>
@@ -120,38 +108,48 @@ public class ShipController : MonoBehaviour
         m_targetVelocity = new Vector2(m_inputs.x * MAX_SPEED, m_inputs.y * MAX_SPEED);
         float targetSpeed = m_inputs.x != 0 || m_inputs.y != 0 ? MAX_SPEED : 0;
         m_speed = (targetSpeed - m_speed) * MAX_ACCELERATION + m_speed;
-        Debug.Log((m_targetVelocity, m_speed, m_transform.forward * Time.deltaTime * m_speed));
 
         Firing = m_inputs.firing; 
 
         if (m_targetVelocity != new Vector2(0, 0))
         {
-            RotateTowards(VectorToAngle(m_targetVelocity), m_rotationSpeed, m_maxRotationSpeed); 
+            Utils.RotateTowards(transform, Utils.VectorToAngle(m_targetVelocity), m_rotationSpeed, m_maxRotationSpeed); 
         }
         
-        m_transform.position += m_transform.right * Time.deltaTime * m_speed;
+        transform.position += transform.right * Time.deltaTime * m_speed;
     }
 
-    void RotateTowards(float targetRotation, float speed, float maxSpeed)
+    public bool gridPosHasNeibours(Vector2Int position)
     {
-        float toRotate = targetRotation - m_transform.rotation.eulerAngles.z;
-        if (toRotate > 180) {toRotate -= 360;}
-        else if (toRotate < -180) {toRotate += 360;}
-        toRotate *= speed;
-        if (toRotate > maxSpeed)
+        TileController[] tileScripts = GetComponentsInChildren<TileController>();
+        Vector2Int[] neibourPositions = {position + Vector2Int.down, position + Vector2Int.up, position + Vector2Int.left, position + Vector2Int.right};
+        foreach (TileController tile in tileScripts)
         {
-            toRotate = maxSpeed;
+            if (neibourPositions.Contains((Vector2Int)tile.m_gridPos))
+            {
+                return true;
+            }
         }
-        m_transform.Rotate(Vector3.forward, toRotate);
+        return false;
     }
 
-}
+    public bool gridPosIsFull(Vector2Int position)
+    {
+        TileController[] tileScripts = GetComponentsInChildren<TileController>();
+        foreach (TileController tile in tileScripts)
+        {
+            if (position == tile.m_gridPos)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    
 
-public struct InputSet
-{
-    public float x;
-    public float y;
-    public bool firing;
-    public float mouseDirection;
-    public bool mouseOnScreen;
+    public Vector2 worldPosToGridPos(Vector2 worldPos) // forwards is x
+    {
+        Debug.Log(transform.InverseTransformPoint(worldPos));
+        return transform.InverseTransformPoint(worldPos);
+    }
 }
