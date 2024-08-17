@@ -39,6 +39,9 @@ public class EnemyController : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D collision2D)
     {
-        Destroy(gameObject);
+        if (!collision2D.gameObject.CompareTag("enemy"))
+        {
+            Destroy(gameObject);
+        }
     }
 }
