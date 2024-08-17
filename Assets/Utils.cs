@@ -20,8 +20,12 @@ static class Utils
     public static float GetMouseAngleFrom(Vector2 relativePoint)
     {
         Vector2 mousePos = GetMousePosition();
-        
-        Vector2 relativeVector = mousePos - relativePoint; //get the vector representing the mouse's position relative to the point
+        return GetAngleFromTo(relativePoint, mousePos);
+    }
+
+    public static float GetAngleFromTo(Vector2 from, Vector2 to)
+    {  
+        Vector2 relativeVector = to - from; //get the vector representing the to's position relative to from
         return VectorToAngle(relativeVector);
     }
 
