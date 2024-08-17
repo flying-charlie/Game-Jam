@@ -19,13 +19,11 @@ public class ShipController : MonoBehaviour
     float m_speed;
     float m_mass;
     shipConfig config;
-    public float MAX_ACCELERATION;
-    public float MAX_SPEED;
-    public float ROTATION_SCALE;
-    public float ROTATION_MIN;
+    public float m_maxAcceleration;
+    public float m_maxSpeed;
     float m_rotationSpeed;
     float m_maxRotationSpeed;
-    float m_thrust;
+    public float m_thrust;
     public float GRID_SCALE;
 
 
@@ -44,9 +42,20 @@ public class ShipController : MonoBehaviour
     public void OnMassChange()
     {
         m_mass = transform.childCount;
-        m_speed = 0;
-        m_rotationSpeed = (float)(config.rotationScale / m_mass + config.rotationMin);
-        m_maxRotationSpeed = (float)(m_rotationSpeed * 90);
+        // m_thrust = 0;
+        // for (int i = 0; i < transform.childCount; i++)
+        // {
+        //     GameObject tile = transform.GetChild(i).gameObject;
+        //     ThrusterController thrusterController = tile.GetComponent<ThrusterController>();
+        //     if (thrusterController != null)
+        //     {
+        //         m_thrust += thrusterController.thrust;
+        //     }
+        // }
+        m_maxAcceleration = (config.accelerationScale / m_mass * m_thrust) + config.accelerationMin;
+        m_maxSpeed = (config.maxSpeedScale / m_mass * m_thrust) + config.maxSpeedMin;
+        m_rotationSpeed = (config.rotationScale / m_mass * m_thrust) + config.rotationMin;
+        m_maxRotationSpeed = m_rotationSpeed * 90;
     }
 
     void FixedUpdate()
@@ -93,9 +102,9 @@ public class ShipController : MonoBehaviour
     /// </summary>
     void DoMovement()
     {
-        m_targetVelocity = new Vector2(m_inputs.x * MAX_SPEED, m_inputs.y * MAX_SPEED);
-        float targetSpeed = m_inputs.x != 0 || m_inputs.y != 0 ? MAX_SPEED : 0;
-        m_speed = (targetSpeed - m_speed) * MAX_ACCELERATION + m_speed;
+        m_targetVelocity = new Vector2(m_inputs.x * m_maxSpeed, m_inputs.y * m_maxSpeed);
+        float targetSpeed = m_inputs.x != 0 || m_inputs.y != 0 ? m_maxSpeed : 0;
+        m_speed = (targetSpeed - m_speed) * m_maxAcceleration + m_speed;
 
         if (m_targetVelocity != new Vector2(0, 0))
         {
@@ -144,4 +153,8 @@ public struct shipConfig
 {
     public float rotationScale;
     public float rotationMin;
+    public float accelerationScale;
+    public float accelerationMin;
+    public float maxSpeedScale;
+    public float maxSpeedMin;
 }

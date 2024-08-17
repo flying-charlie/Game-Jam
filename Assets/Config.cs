@@ -6,6 +6,7 @@ public class Config : MonoBehaviour
 {
     public Dictionary<string, GunConfig> gunCfg = new();
     public Dictionary<string, BulletConfig> bulletCfg = new();
+    public shipConfig shipCfg;
     public GameObject basicBullet;
 
     void Start()
@@ -21,5 +22,14 @@ public class Config : MonoBehaviour
             speed = 5,
             damage = 5
         });
+
+        shipCfg = new(){
+            rotationScale = 0.5F,
+            rotationMin = 0.2F,
+            accelerationScale = 0.1F,
+            maxSpeedScale = 0.2F,
+            accelerationMin = 1,
+            maxSpeedMin = 5,
+        };
     }
 }
