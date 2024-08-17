@@ -9,6 +9,7 @@ TagManager:
   - enemy
   - tile
   - config
+  - bullet
   layers:
   - Default
   - TransparentFX

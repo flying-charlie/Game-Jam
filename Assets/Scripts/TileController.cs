@@ -59,6 +59,7 @@ public class TileController : MonoBehaviour // , Tiling.iTile
     {
         m_gridPos = null;
         transform.parent = null;
+        m_shipController.OnMassChange();
     }
 
     void OnMouseUp()
@@ -90,10 +91,8 @@ public class TileController : MonoBehaviour // , Tiling.iTile
     {
         
     }
-    public virtual void attachedUpdate(TileUpdateData data) 
-    {
 
-    } 
+    public virtual void attachedUpdate(TileUpdateData data) {}  //use this instead of update
 
     // public Vector2Int gridPosition{get{
     //     return m_gridPos;

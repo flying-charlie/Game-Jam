@@ -43,16 +43,16 @@ public class ShipController : MonoBehaviour
     public void OnMassChange()
     {
         m_mass = transform.childCount;
-        // m_thrust = 0;
-        // for (int i = 0; i < transform.childCount; i++)
-        // {
-        //     GameObject tile = transform.GetChild(i).gameObject;
-        //     ThrusterController thrusterController = tile.GetComponent<ThrusterController>();
-        //     if (thrusterController != null)
-        //     {
-        //         m_thrust += thrusterController.thrust;
-        //     }
-        // }
+        m_thrust = 0;
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            GameObject tile = transform.GetChild(i).gameObject;
+            ThrusterController thrusterController = tile.GetComponent<ThrusterController>();
+            if (thrusterController != null)
+            {
+                m_thrust += thrusterController.thrust;
+            }
+        }
         m_maxAcceleration = (config.accelerationScale / m_mass * m_thrust) + config.accelerationMin;
         m_maxSpeed = (config.maxSpeedScale / m_mass * m_thrust) + config.maxSpeedMin;
         m_rotationSpeed = (config.rotationScale / m_mass * m_thrust) + config.rotationMin;

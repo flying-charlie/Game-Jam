@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -67,5 +68,25 @@ static class Utils
             toRotate = -maxSpeed;
         }
         transform.Rotate(Vector3.forward, toRotate);
+    }
+
+    public static T WeightedRandom<T>(Dictionary<T, float> weights)
+    {
+        float weightTotal = weights.Values.AsEnumerable().Sum();
+        float randValue = Random.Range(0, weightTotal);
+
+        foreach (KeyValuePair<T, float> option in weights)
+        {
+            randValue -= option.Value;
+            if (randValue <= 0)
+            {
+                return option.Key;
+            }
+        }
+        if (randValue < 0.1)
+        {
+            return weights.Last().Key;
+        }
+        throw new System.Exception("Weighted random ran out of possible values before finding one that fitted with random number generated");
     }
 }

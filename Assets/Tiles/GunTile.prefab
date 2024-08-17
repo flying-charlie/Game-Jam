@@ -230,8 +230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ROTATION_SNAP_SPEED: 0
   POSITION_SNAP_SPEED: 0
-  bullet: {fileID: 4401392891142851056, guid: 31c79171c8208a448a0c7bc22a531b61, type: 3}
-  fireAngleTolerance: 20
+  configId: basic
 --- !u!1 &7878615359729854502
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,4 +276,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d72cef44a1fc3446b757e34f5f17189, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 4401392891142851056, guid: 31c79171c8208a448a0c7bc22a531b61, type: 3}

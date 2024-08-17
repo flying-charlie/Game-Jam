@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
-    public float DESPAWN_TIME;
     float despawnTime;
     BulletConfig config;
     public string configId;
@@ -25,7 +24,7 @@ public class BulletController : MonoBehaviour
     {
         DoMovement();
         despawnTime += Time.deltaTime;
-        if (despawnTime > DESPAWN_TIME)
+        if (despawnTime > config.duration)
         {
             Destroy(gameObject);
         }     
@@ -46,4 +45,5 @@ public struct BulletConfig
 {
     public float speed;
     public float damage;
+    public float duration;
 }
