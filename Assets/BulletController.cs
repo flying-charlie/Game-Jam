@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
-    public BulletConfig config;
+    BulletConfig config;
+    public string configId;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        config = GameObject.FindGameObjectWithTag("config").GetComponent<Config>().bulletCfg[configId];
     }
 
     // Update is called once per frame
@@ -37,4 +38,5 @@ public class BulletController : MonoBehaviour
 public struct BulletConfig
 {
     public float speed;
+    public float damage;
 }

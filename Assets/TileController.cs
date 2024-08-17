@@ -52,6 +52,7 @@ public class TileController : MonoBehaviour // , Tiling.iTile
         m_gridPos = gridPos;
         transform.localPosition = new Vector3(gridPos.x, gridPos.y);
         Utils.RotateTowardsLocal(transform, m_ship.transform.rotation.z, 1);
+        m_shipController.OnMassChange();
     }
 
     void Detach()
