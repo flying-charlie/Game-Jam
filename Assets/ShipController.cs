@@ -14,13 +14,16 @@ public class ShipController : MonoBehaviour
     InputSet m_inputs;
     Vector2 m_targetVelocity;
     Vector2 m_velocity;
+    float m_speed;
     bool Firing;
     public float MASS;
     public float MAX_ACCELERATION;
     public float MAX_SPEED;
     public float ROTATION_SCALE;
     public float ROTATION_MIN;
+    public bool ALTERNATE_MOVEMENT;
     float m_rotationSpeed;
+    float m_maxRotationSpeed;
     Vector2 cameraPos = new(0, 0);
 
     // Start is called before the first frame update
@@ -33,13 +36,23 @@ public class ShipController : MonoBehaviour
     void Update()
     {
         m_rotationSpeed = (float)(ROTATION_SCALE / MASS + ROTATION_MIN); //move this to OnMassChange
+        m_maxRotationSpeed = (float)(m_rotationSpeed * 90); //move this to OnMassChange
     }
 
     void FixedUpdate()
     {
         GetInputs();
 
-        DoMovement();
+        if (ALTERNATE_MOVEMENT)
+        {
+            DoMovement2();
+        }
+        else
+        {
+            DoMovement();
+        }
+        
+        
     }
 
     /// <summary>
@@ -82,6 +95,9 @@ public class ShipController : MonoBehaviour
         return angleRadians * Mathf.Rad2Deg;   //convert to degrees
     }
 
+    /// <summary>
+    /// Calculate and perform movement and rotation. Rotation is cosmetic.
+    /// </summary>
     void DoMovement()
     {
         m_targetVelocity = new Vector2(m_inputs.x * MAX_SPEED, m_inputs.y * MAX_SPEED);
@@ -91,17 +107,41 @@ public class ShipController : MonoBehaviour
 
         if (m_velocity != new Vector2(0, 0))
         {
-            RotateTowards(VectorToAngle(m_velocity), m_rotationSpeed);
+            RotateTowards(VectorToAngle(m_velocity), m_rotationSpeed * 2, m_maxRotationSpeed);  // rotation speed is multiplied by 2 here to compensate the additional velocity lerp
         }
         m_transform.position += new Vector3(m_velocity.x * Time.deltaTime, m_velocity.y * Time.deltaTime);
     }
 
-    void RotateTowards(float targetRotation, float speed)
+    /// <summary>
+    /// Calculate and perform movement and rotation. Rotation speed affects turning time.
+    /// </summary>
+    void DoMovement2()
+    {
+        m_targetVelocity = new Vector2(m_inputs.x * MAX_SPEED, m_inputs.y * MAX_SPEED);
+        float targetSpeed = m_inputs.x != 0 || m_inputs.y != 0 ? MAX_SPEED : 0;
+        m_speed = (targetSpeed - m_speed) * MAX_ACCELERATION + m_speed;
+        Debug.Log((m_targetVelocity, m_speed, m_transform.forward * Time.deltaTime * m_speed));
+
+        Firing = m_inputs.firing; 
+
+        if (m_targetVelocity != new Vector2(0, 0))
+        {
+            RotateTowards(VectorToAngle(m_targetVelocity), m_rotationSpeed, m_maxRotationSpeed); 
+        }
+        
+        m_transform.position += m_transform.right * Time.deltaTime * m_speed;
+    }
+
+    void RotateTowards(float targetRotation, float speed, float maxSpeed)
     {
         float toRotate = targetRotation - m_transform.rotation.eulerAngles.z;
         if (toRotate > 180) {toRotate -= 360;}
         else if (toRotate < -180) {toRotate += 360;}
         toRotate *= speed;
+        if (toRotate > maxSpeed)
+        {
+            toRotate = maxSpeed;
+        }
         m_transform.Rotate(Vector3.forward, toRotate);
     }
 
