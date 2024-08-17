@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
+    public BulletConfig config;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,4 +17,24 @@ public class BulletController : MonoBehaviour
     {
         
     }
+
+    void FixedUpdate()
+    {
+        DoMovement();     
+    }
+
+    void DoMovement()
+    {
+        transform.position += transform.right * Time.deltaTime * config.speed;  
+    }
+
+    void OnCollisionEnter2D(Collision2D collision2D)
+    {
+        Destroy(gameObject);
+    }
+}
+
+public struct BulletConfig
+{
+    public float speed;
 }

@@ -89,7 +89,7 @@ public class TileController : MonoBehaviour // , Tiling.iTile
     {
         
     }
-    public virtual void attachedUpdate(tileUpdateData data) 
+    public virtual void attachedUpdate(TileUpdateData data) 
     {
 
     } 

@@ -58,7 +58,7 @@ public class ShipController : MonoBehaviour
         for (int i = 0; i < transform.childCount; i++)
         {
             GameObject tile = transform.GetChild(i).gameObject;
-            tile.GetComponent<TileController>().attachedUpdate(new tileUpdateData() {
+            tile.GetComponent<TileController>().attachedUpdate(new TileUpdateData() {
                 inputs = m_inputs
             });
         }

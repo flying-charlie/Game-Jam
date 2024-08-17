@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 9158597550563950057}
   m_Layer: 0
   m_Name: GunTile
-  m_TagString: Untagged
+  m_TagString: tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -241,7 +241,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4845974201167036297}
-  - component: {fileID: 307933045806440603}
+  - component: {fileID: 8297931050958778436}
   m_Layer: 0
   m_Name: GunBase
   m_TagString: Untagged
@@ -265,7 +265,7 @@ Transform:
   - {fileID: 2385458358013690593}
   m_Father: {fileID: 6718879748375143010}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &307933045806440603
+--- !u!114 &8297931050958778436
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -274,7 +274,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7878615359729854502}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d57a5bde0d284d54796a0fa30a23ae84, type: 3}
+  m_Script: {fileID: 11500000, guid: 6d72cef44a1fc3446b757e34f5f17189, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 0}
+  bullet: {fileID: 4401392891142851056, guid: 31c79171c8208a448a0c7bc22a531b61, type: 3}

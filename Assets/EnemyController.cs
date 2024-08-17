@@ -26,6 +26,7 @@ public class EnemyController : MonoBehaviour
     {
         DoMovement();
     }
+    
     void DoMovement()
     {
         float targetAngle = Utils.GetAngleFromTo(transform.position, m_ship.transform.position);

@@ -11,7 +11,7 @@ public struct InputSet
     public bool mouseOnScreen;
 }
 
-public struct tileUpdateData
+public struct TileUpdateData
 {
     public InputSet inputs;
 }

@@ -18,10 +18,11 @@ public class GunTileController : TileController
         m_gunController.bullet = bullet;
         config.rotationSpeed = 0.5F;
         config.reloadTime = 1;
+        config.bulletSpeed = 10;
         base.Start();
     }
 
-    public override void attachedUpdate(tileUpdateData data)
+    public override void attachedUpdate(TileUpdateData data)
     {
         m_firing = data.inputs.firing;
         DoFiring();
@@ -42,7 +43,9 @@ public class GunTileController : TileController
     void Fire()
     {
         timeSinceLastFire = 0;
-        m_gunController.Fire();
+        m_gunController.Fire(new BulletConfig(){
+            speed = config.bulletSpeed
+        });
     }
 }
 
@@ -50,4 +53,5 @@ public struct GunConfig
 {
     public float reloadTime;
     public float rotationSpeed;
+    public float bulletSpeed;
 }
