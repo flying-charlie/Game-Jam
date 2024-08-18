@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -5177388603050735206, guid: 8884154dfe85442a3a3578be807dbcdf, type: 3}
-  m_Color: {r: 0.9505596, g: 0, b: 1, a: 1}
+  m_Color: {r: 0, g: 1, b: 0.18219042, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -262,6 +262,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Mass: 1
   size: {x: 1, y: 1}
+  tileType: 
   configId: laser
 --- !u!1 &7878615359729854502
 GameObject:
