@@ -10,6 +10,7 @@ TagManager:
   - tile
   - config
   - bullet
+  - powerup
   layers:
   - Default
   - TransparentFX

@@ -11,7 +11,7 @@ public class TileController : MonoBehaviour // , Tiling.iTile
     public Vector2Int? gridPos = null; //bottom left
     public int Mass;
     bool dragging = false;
-    public Vector2Int size = new Vector2Int(1, 2);
+    public Vector2Int size = new Vector2Int(1, 1);
 
 
     protected virtual void OnMouseDrag()

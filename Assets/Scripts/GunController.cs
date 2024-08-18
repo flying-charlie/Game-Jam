@@ -9,8 +9,9 @@ public class GunController : MonoBehaviour
         Utils.RotateTowards(transform, targetRotation, speed);
     }
 
-    public void Fire(GameObject bullet)
+    public void Fire(GameObject bullet, BulletConfig bulletConfig)
     {
         GameObject newBullet = Instantiate(bullet, transform.position, transform.rotation);
+        newBullet.GetComponent<BulletController>().config = bulletConfig;
     }
 }

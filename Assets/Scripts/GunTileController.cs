@@ -51,7 +51,7 @@ public class GunTileController : TileController
     void Fire()
     {
         timeSinceLastFire = 0;
-        m_gunController.Fire(config.bullet);
+        m_gunController.Fire(config.bullet, config.bulletConfig);
     }
 }
 
@@ -61,4 +61,5 @@ public struct GunConfig
     public float rotationSpeed;
     public float fireAngleTolerance;
     public GameObject bullet;
+    public BulletConfig bulletConfig;
 }

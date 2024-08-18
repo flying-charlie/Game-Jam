@@ -44,15 +44,12 @@ public class Config : MonoBehaviour
             reloadTime = 1,
             rotationSpeed = 0.5F,
             fireAngleTolerance = 10,
-            bullet = basicBullet
-        });
-        #endregion
-        
-        #region Bullets
-        bulletCfg.Add("basic", new BulletConfig(){
-            speed = 7,
-            damage = 5,
-            duration = 3
+            bullet = basicBullet,
+            bulletConfig = new BulletConfig(){
+                speed = 7,
+                damage = 5,
+                duration = 3
+            }
         });
         #endregion
 

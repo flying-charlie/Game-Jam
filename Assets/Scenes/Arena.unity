@@ -180,6 +180,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 531642313}
     m_Modifications:
+    - target: {fileID: -4904685948116762110, guid: 08e130cc38f56a24281c5e2f541213d9, type: 3}
+      propertyPath: size.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5790698615419295423, guid: 08e130cc38f56a24281c5e2f541213d9, type: 3}
       propertyPath: m_Name
       value: CoreTile
@@ -242,6 +246,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 531642313}
     m_Modifications:
+    - target: {fileID: 5524136232962081784, guid: 3252af1c152c8e74897498d2be272bfe, type: 3}
+      propertyPath: size.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5790698615419295423, guid: 3252af1c152c8e74897498d2be272bfe, type: 3}
       propertyPath: m_Name
       value: ThrusterTile

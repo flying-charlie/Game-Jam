@@ -5,13 +5,12 @@ using UnityEngine;
 public class BulletController : MonoBehaviour
 {
     float despawnTime;
-    BulletConfig config;
-    public string configId;
+    public BulletConfig config;
 
     // Start is called before the first frame update
     void Start()
     {
-        config = GameObject.FindGameObjectWithTag("config").GetComponent<Config>().bulletCfg[configId];
+        // config = GameObject.FindGameObjectWithTag("config").GetComponent<Config>().bulletCfg[configId];
     }
 
     // Update is called once per frame

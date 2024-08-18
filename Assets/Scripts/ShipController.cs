@@ -16,7 +16,7 @@ public class ShipController : MonoBehaviour
     InputSet m_inputs;
     Vector2 m_targetVelocity;
     Vector2 m_velocity;
-    float m_speed;
+    float m_speed = 0;
     float m_mass;
     shipConfig config;
     float m_maxAcceleration;
@@ -50,7 +50,7 @@ public class ShipController : MonoBehaviour
         {
             GameObject tile = transform.GetChild(i).gameObject;
             TileController tileController = tile.GetComponent<TileController>();
-            m_thrust += tileController.Mass;
+            m_mass += tileController.Mass;
         }
 
         m_thrust = 0;
