@@ -14,9 +14,11 @@ public class Config : MonoBehaviour
     public GameObject basicBullet;
     public GameObject railgunBullet;
     public GameObject laserBullet;
+    public GameObject shotgunBullet;
     public GameObject basicGun;
     public GameObject railgunGun;
     public GameObject laserGun;
+    public GameObject shotgunGun;
     public GameObject basicThruster;
     public GameObject corridor;
     public GameObject speedPowerup;
@@ -48,7 +50,7 @@ public class Config : MonoBehaviour
             reloadTime = 1,
             rotationSpeed = 0.5F,
             fireAngleTolerance = 10,
-            bulletSpreadAngle = 1,
+            bulletSpreadAngle = 5,
             numberOfProjectiles = 1,
             bullet = basicBullet,
             bulletConfig = new BulletConfig(){
@@ -76,13 +78,27 @@ public class Config : MonoBehaviour
             reloadTime = 0.01f,
             rotationSpeed = 0.5F,
             fireAngleTolerance = 10,
-            bulletSpreadAngle = 1,
+            bulletSpreadAngle = 0,
             numberOfProjectiles = 1,
             bullet = railgunBullet,
             bulletConfig = new BulletConfig(){
                 speed = 100,
                 damage = 0.1f,
                 duration = 0.1f
+            }
+        });
+
+        gunCfg.Add("shotgun", new GunConfig(){
+            reloadTime = 2,
+            rotationSpeed = 0.7F,
+            fireAngleTolerance = 10,
+            bulletSpreadAngle = 60,
+            numberOfProjectiles = 20,
+            bullet = railgunBullet,
+            bulletConfig = new BulletConfig(){
+                speed = 10,
+                damage = 0.7f,
+                duration = 1.2f
             }
         });
         #endregion
@@ -98,6 +114,7 @@ public class Config : MonoBehaviour
             maxAcceleration = 1,
             maxspeed = 0.5F,
             rotationalSpeed = 0.2F,
+            enemyHealth = 10,
             dropChance = 0.5F,
             dropWeights = new(){}
         });
@@ -107,11 +124,13 @@ public class Config : MonoBehaviour
         enemyCfg["basic"].dropWeights.Add(speedPowerup, 0.1F); // should be more like 0.1
         enemyCfg["basic"].dropWeights.Add(railgunGun, 1);
         enemyCfg["basic"].dropWeights.Add(laserGun, 1);
+        enemyCfg["basic"].dropWeights.Add(shotgunGun, 1);
 
         enemyCfg.Add("firstEnemy", new EnemyConfig(){
             maxAcceleration = 1,
             maxspeed = 0.5F,
             rotationalSpeed = 0.2F,
+            enemyHealth = 10,
             dropChance = 1F,
             dropWeights = new(){}
         });
