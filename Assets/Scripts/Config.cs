@@ -12,7 +12,11 @@ public class Config : MonoBehaviour
     public EnemySpawnConfig enemySpawnCfg = new(); 
     public shipConfig shipCfg = new();
     public GameObject basicBullet;
+    public GameObject railgunBullet;
+    public GameObject laserBullet;
     public GameObject basicGun;
+    public GameObject railgunGun;
+    public GameObject laserGun;
     public GameObject basicThruster;
     public GameObject corridor;
     public GameObject speedPowerup;
@@ -44,11 +48,41 @@ public class Config : MonoBehaviour
             reloadTime = 1,
             rotationSpeed = 0.5F,
             fireAngleTolerance = 10,
+            bulletSpreadAngle = 1,
+            numberOfProjectiles = 1,
             bullet = basicBullet,
             bulletConfig = new BulletConfig(){
                 speed = 7,
                 damage = 5,
                 duration = 3
+            }
+        });
+
+        gunCfg.Add("railgun", new GunConfig(){
+            reloadTime = 5,
+            rotationSpeed = 0.3F,
+            fireAngleTolerance = 10,
+            bulletSpreadAngle = 1,
+            numberOfProjectiles = 1,
+            bullet = railgunBullet,
+            bulletConfig = new BulletConfig(){
+                speed = 35,
+                damage = 50,
+                duration = 3
+            }
+        });
+
+        gunCfg.Add("laser", new GunConfig(){
+            reloadTime = 0.01f,
+            rotationSpeed = 0.5F,
+            fireAngleTolerance = 10,
+            bulletSpreadAngle = 1,
+            numberOfProjectiles = 1,
+            bullet = railgunBullet,
+            bulletConfig = new BulletConfig(){
+                speed = 100,
+                damage = 0.1f,
+                duration = 0.1f
             }
         });
         #endregion
@@ -71,6 +105,8 @@ public class Config : MonoBehaviour
         enemyCfg["basic"].dropWeights.Add(basicThruster, 1);
         enemyCfg["basic"].dropWeights.Add(corridor, 2);
         enemyCfg["basic"].dropWeights.Add(speedPowerup, 0.1F); // should be more like 0.1
+        enemyCfg["basic"].dropWeights.Add(railgunGun, 1);
+        enemyCfg["basic"].dropWeights.Add(laserGun, 1);
 
         enemyCfg.Add("firstEnemy", new EnemyConfig(){
             maxAcceleration = 1,

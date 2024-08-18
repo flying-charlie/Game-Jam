@@ -180,7 +180,7 @@ GameObject:
   - component: {fileID: 6373142030600817178}
   - component: {fileID: 9158597550563950057}
   m_Layer: 0
-  m_Name: GunTile
+  m_Name: Railgun Tile
   m_TagString: tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -262,7 +262,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Mass: 1
   size: {x: 1, y: 1}
-  configId: basic
+  configId: railgun
 --- !u!1 &7878615359729854502
 GameObject:
   m_ObjectHideFlags: 0
