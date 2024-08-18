@@ -26,12 +26,12 @@ public class GunTileController : TileController
 
     protected override void OnSizeChange()
     {
-        if (gridPos != null)
-        {
-            transform.localPosition = new Vector3((float)(size.x - 1) / 2 + ((Vector2)gridPos).x, (float)(size.y - 1) / 2 + ((Vector2)gridPos).y);
-        }
+        base.OnSizeChange();
+        transform.localScale = new Vector3(1, 1);
+
         transform.GetChild(0).transform.localScale = new Vector3(size.x, size.y);
         GetComponent<BoxCollider2D>().size = new Vector2(size.x, size.y);
+
         float gunScale = Mathf.Min(size.x, size.y);
         transform.GetChild(1).transform.localScale = new Vector3(gunScale, gunScale);
     }

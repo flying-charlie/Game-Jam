@@ -9,6 +9,7 @@ public class TileController : MonoBehaviour // , Tiling.iTile
     GameObject m_ship;
     ShipController m_shipController;
     public Vector2Int? gridPos = null; //bottom left
+    public int Mass;
     bool dragging = false;
     public Vector2Int size = new Vector2Int(1, 2);
 
@@ -107,6 +108,8 @@ public class TileController : MonoBehaviour // , Tiling.iTile
         {
             transform.localPosition = new Vector3((float)(size.x - 1) / 2 + ((Vector2)gridPos).x, (float)(size.y - 1) / 2 + ((Vector2)gridPos).y);
         }
+        Mass = size.x * size.y;
+        m_shipController.OnMassChange();
     }
 
     public virtual void attachedUpdate(TileUpdateData data) {}  //use this instead of update
