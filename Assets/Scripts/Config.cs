@@ -50,7 +50,7 @@ public class Config : MonoBehaviour
         
         #region Bullets
         bulletCfg.Add("basic", new BulletConfig(){
-            speed = 5,
+            speed = 7,
             damage = 5,
             duration = 3
         });
