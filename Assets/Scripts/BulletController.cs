@@ -37,7 +37,10 @@ public class BulletController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision2D)
     {
-        Destroy(gameObject);
+        if (!collision2D.gameObject.CompareTag("powerup") && !collision2D.gameObject.CompareTag("tile"))
+        {
+            Destroy(gameObject);
+        }
     }
 }
 

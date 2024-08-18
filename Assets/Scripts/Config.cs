@@ -8,12 +8,14 @@ public class Config : MonoBehaviour
     public Dictionary<string, BulletConfig> bulletCfg = new();
     public Dictionary<string, ThrusterConfig> thrusterCfg = new();
     public Dictionary<string, EnemyConfig> enemyCfg = new();
-    public EnemySpawnConfig enemySpawnCfg = new();
+    public Dictionary<string, PowerupConfig> powerupCfg = new();
+    public EnemySpawnConfig enemySpawnCfg = new(); 
     public shipConfig shipCfg = new();
     public GameObject basicBullet;
     public GameObject basicGun;
     public GameObject basicThruster;
     public GameObject corridor;
+    public GameObject speedPowerup;
     public GameObject basicEnemy;
 
     public void Awake()
@@ -70,7 +72,8 @@ public class Config : MonoBehaviour
         });
         enemyCfg["basic"].dropWeights.Add(basicGun, 1);
         enemyCfg["basic"].dropWeights.Add(basicThruster, 1);
-        enemyCfg["basic"].dropWeights.Add(corridor, 1);
+        enemyCfg["basic"].dropWeights.Add(corridor, 2);
+        enemyCfg["basic"].dropWeights.Add(speedPowerup, 0.1F); // should be more like 0.1
 
         enemyCfg.Add("firstEnemy", new EnemyConfig(){
             maxAcceleration = 1,
@@ -81,5 +84,13 @@ public class Config : MonoBehaviour
         });
         enemyCfg["firstEnemy"].dropWeights.Add(basicGun, 1);
         #endregion
+
+        #region Powerups (temporary)
+            powerupCfg.Add("speed", new PowerupConfig(){
+                duration = 10,
+                multiplier = 2
+            });
+        #endregion
+
     }
 }

@@ -8,7 +8,6 @@ public class EnemyController : MonoBehaviour
 {
     public string configId;
     float m_speed;
-    Vector2 m_targetVelocity;
     GameObject m_ship;
     EnemyConfig m_config;
     // Start is called before the first frame update
@@ -34,7 +33,6 @@ public class EnemyController : MonoBehaviour
         float targetAngle = Utils.GetAngleFromTo(transform.position, m_ship.transform.position);
         Utils.RotateTowards(transform, targetAngle, m_config.rotationalSpeed);
 
-        m_targetVelocity = new Vector2(m_config.maxspeed, m_config.maxspeed);
         m_speed = (m_config.maxspeed - m_speed) * m_config.maxAcceleration + m_speed;
 
         transform.position += transform.right * Time.deltaTime * m_speed;

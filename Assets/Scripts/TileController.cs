@@ -8,10 +8,9 @@ public class TileController : MonoBehaviour // , Tiling.iTile
 {
     GameObject m_ship;
     ShipController m_shipController;
-    public Vector2Int? m_gridPos = null;
+    public Vector2Int? gridPos = null; //bottom left
     bool dragging = false;
-    public float ROTATION_SNAP_SPEED;
-    public float POSITION_SNAP_SPEED;
+    public Vector2Int size = new Vector2Int(1, 2);
 
 
     protected virtual void OnMouseDrag()
@@ -32,24 +31,31 @@ public class TileController : MonoBehaviour // , Tiling.iTile
     protected virtual void OnEndDrag()
     {
         Debug.Log("Drag ended");
-        Vector2 relativePos = m_shipController.worldPosToGridPos(transform.position);
+        Vector2 relativePos = m_shipController.worldPosToGridPos(transform.position, size);
         Vector2Int gridPos = new(Mathf.RoundToInt(relativePos.x), Mathf.RoundToInt(relativePos.y));
         Debug.Log("Attempting attach");
         if (!m_shipController.gridPosIsFull(gridPos) && m_shipController.gridPosHasNeibours(gridPos))
         {
             AttachAt(gridPos);
-            Debug.Log("Attached");
         }
         else
         {
-            Debug.Log("Attach failed");
+            Debug.Log(gridPos);
+            if (m_shipController.gridPosIsFull(gridPos))
+            {
+                Debug.Log("Position full");
+            }
+            if (!m_shipController.gridPosHasNeibours(gridPos))
+            {
+                Debug.Log("No neibours");
+            }
         }
     }
 
     void AttachAt(Vector2Int gridPos)
     {
         transform.parent = m_ship.transform;
-        m_gridPos = gridPos;
+        this.gridPos = gridPos;
         transform.localPosition = new Vector3(gridPos.x, gridPos.y);
         Utils.RotateTowardsLocal(transform, m_ship.transform.rotation.z, 1);
         m_shipController.OnMassChange();
@@ -57,7 +63,7 @@ public class TileController : MonoBehaviour // , Tiling.iTile
 
     void Detach()
     {
-        m_gridPos = null;
+        gridPos = null;
         transform.parent = null;
         m_shipController.OnMassChange();
     }
@@ -80,16 +86,27 @@ public class TileController : MonoBehaviour // , Tiling.iTile
         }
         else
         {
-            m_gridPos = new Vector2Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y));
+            gridPos = new Vector2Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y));
         }
         m_ship = GameObject.FindGameObjectWithTag("ship");
         m_shipController = m_ship.GetComponent<ShipController>();
+        OnSizeChange();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    protected virtual void OnSizeChange()
+    {
+        transform.localScale = new Vector3(size.x, size.y);
+        GetComponent<BoxCollider2D>().size = new Vector2(size.x, size.y);
+        if (gridPos != null)
+        {
+            transform.localPosition = new Vector3((float)(size.x - 1) / 2 + ((Vector2)gridPos).x, (float)(size.y - 1) / 2 + ((Vector2)gridPos).y);
+        }
     }
 
     public virtual void attachedUpdate(TileUpdateData data) {}  //use this instead of update
@@ -103,8 +120,11 @@ public class TileController : MonoBehaviour // , Tiling.iTile
     // }}
 
     // public IEnumerable<Vector2Int> openConnections => throw new System.NotImplementedException();
-    void OnCollisionEnter2D(Collision2D collision2D)
+    void OnCollisionEnter2D(Collision2D other)
     {
-        Destroy(gameObject);
+        if (other.gameObject.CompareTag("enemy"))
+        {
+            Destroy(gameObject);
+        }
     }
 }

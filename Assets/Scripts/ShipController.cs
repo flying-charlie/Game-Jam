@@ -23,6 +23,9 @@ public class ShipController : MonoBehaviour
     float m_maxSpeed;
     float m_rotationSpeed;
     float m_maxRotationSpeed;
+    float m_speedMultiplier = 1;
+    float m_powerupTimer;
+    bool m_powerupActive;
     public float m_thrust;
     public float GRID_SCALE;
 
@@ -53,6 +56,7 @@ public class ShipController : MonoBehaviour
                 m_thrust += thrusterController.thrust;
             }
         }
+        m_thrust *= m_speedMultiplier;
         m_maxAcceleration = (config.accelerationScale / m_mass * m_thrust) + config.accelerationMin;
         m_maxSpeed = (config.maxSpeedScale / m_mass * m_thrust) + config.maxSpeedMin;
         m_rotationSpeed = (config.rotationScale / m_mass * m_thrust) + config.rotationMin;
@@ -63,6 +67,7 @@ public class ShipController : MonoBehaviour
     {
         GetInputs();
         DoMovement();
+        DoPowerups();
 
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -117,11 +122,10 @@ public class ShipController : MonoBehaviour
 
     public bool gridPosHasNeibours(Vector2Int position)
     {
-        TileController[] tileScripts = GetComponentsInChildren<TileController>();
         Vector2Int[] neibourPositions = {position + Vector2Int.down, position + Vector2Int.up, position + Vector2Int.left, position + Vector2Int.right};
-        foreach (TileController tile in tileScripts)
+        foreach (Vector2Int neibourPos in neibourPositions)
         {
-            if (neibourPositions.Contains((Vector2Int)tile.m_gridPos))
+            if (gridPosIsFull(neibourPos))
             {
                 return true;
             }
@@ -134,7 +138,9 @@ public class ShipController : MonoBehaviour
         TileController[] tileScripts = GetComponentsInChildren<TileController>();
         foreach (TileController tile in tileScripts)
         {
-            if (position == tile.m_gridPos)
+            Vector2Int tileGridPos = (Vector2Int)tile.gridPos;
+            if (tileGridPos.x <= position.x && position.x <= (tileGridPos.x + tile.size.x - 1) 
+            &&  tileGridPos.y <= position.y && position.y <= (tileGridPos.y + tile.size.y - 1))
             {
                 return true;
             }
@@ -143,10 +149,42 @@ public class ShipController : MonoBehaviour
     }
     
 
-    public Vector2 worldPosToGridPos(Vector2 worldPos) // forwards is x
+    public Vector2 worldPosToGridPos(Vector2 worldPos, Vector2Int size) // forwards is x
     {
-        Debug.Log(transform.InverseTransformPoint(worldPos));
-        return transform.InverseTransformPoint(worldPos);
+        Vector2 correctedWorldPos = worldPos - new Vector2((float)(size.x - 1) / 2, (float)(size.y - 1) / 2);
+        return transform.InverseTransformPoint(correctedWorldPos);
+    }
+
+    public void tempWeaponStatIncrease(string stat, float multiplier, float duration)
+    {
+
+    }
+
+    public void tempSpeedIncrease(float multiplier, float duration)
+    {
+        stopPowerup();
+        m_speedMultiplier = multiplier;
+        m_powerupTimer = duration;
+        m_powerupActive = true;
+        OnMassChange();
+    }
+
+    void DoPowerups()
+    {
+        if (m_powerupActive)
+        {
+            m_powerupTimer -= Time.deltaTime;
+            if (m_powerupTimer < 0)
+            {
+                stopPowerup();
+            }
+        }
+    }
+
+    void stopPowerup()
+    {
+        m_speedMultiplier = 1;
+        m_powerupActive = false;
     }
 }
 
