@@ -262,6 +262,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Mass: 1
   size: {x: 1, y: 1}
+  tileType: LaserGun
   configId: laser
 --- !u!1 &7878615359729854502
 GameObject:
