@@ -143,5 +143,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 586e941a5ac48fe4584c06713f3fa27c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Mass: 0
+  Mass: 1
   size: {x: 1, y: 1}
+  tileType: Core

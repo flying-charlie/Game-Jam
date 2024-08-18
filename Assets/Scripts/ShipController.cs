@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
+using System.Data.Common;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Xml;
 using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEditor.U2D.Aseprite;
@@ -124,18 +127,18 @@ public class ShipController : MonoBehaviour
 
         if (m_targetVelocity != new Vector2(0, 0))
         {
-            Utils.RotateTowards(transform, Utils.VectorToAngle(m_targetVelocity), m_rotationSpeed, m_maxRotationSpeed); 
+            Utils.RotateTowards(transform, Utils.VectorToAngle(m_targetVelocity), m_rotationSpeed, m_maxRotationSpeed);
         }
         
         transform.position += transform.right * Time.deltaTime * m_speed;
     }
 
-    public bool gridPosHasNeibours(Vector2Int position)
+    public bool GridPosHasNeibours(Vector2Int position)
     {
         Vector2Int[] neibourPositions = {position + Vector2Int.down, position + Vector2Int.up, position + Vector2Int.left, position + Vector2Int.right};
         foreach (Vector2Int neibourPos in neibourPositions)
         {
-            if (gridPosIsFull(neibourPos))
+            if (GridPosIsFull(neibourPos))
             {
                 return true;
             }
@@ -143,7 +146,16 @@ public class ShipController : MonoBehaviour
         return false;
     }
 
-    public bool gridPosIsFull(Vector2Int position)
+    public bool GridPosIsFull(Vector2Int position)
+    {
+        if (GetTileAt(position) != null)
+        {
+            return true;
+        }
+        return false;
+    }
+    
+    public GameObject GetTileAt(Vector2Int position)
     {
         TileController[] tileScripts = GetComponentsInChildren<TileController>();
         foreach (TileController tile in tileScripts)
@@ -152,12 +164,106 @@ public class ShipController : MonoBehaviour
             if (tileGridPos.x <= position.x && position.x <= (tileGridPos.x + tile.size.x - 1) 
             &&  tileGridPos.y <= position.y && position.y <= (tileGridPos.y + tile.size.y - 1))
             {
-                return true;
+                return tile.gameObject;
             }
         }
-        return false;
+        return null;
     }
-    
+
+    public Dictionary<string, GameObject> GetNeighbours(Vector2Int position) // don't use for big blocks
+    {
+        Dictionary<string, GameObject> output = new()
+        {
+            { "left", GetTileAt(position + Vector2Int.left) },
+            { "right", GetTileAt(position + Vector2Int.right) },
+            { "up", GetTileAt(position + Vector2Int.up) },
+            { "down", GetTileAt(position + Vector2Int.down) }
+        };
+        return output;
+    }
+
+    public bool CanJoin(GameObject tile, string direction) // TODO handle no tile at queried space
+    {
+        TileController controller = tile.GetComponent<TileController>();
+        Vector2Int tilePos = (Vector2Int)controller.gridPos;
+        if (direction == "down")
+        {
+            for (int pos = tilePos.x; pos < tilePos.x + controller.size.x; pos++)
+            {
+                GameObject foundTile = GetTileAt(new Vector2Int(pos, tilePos.y - 1));
+                if (foundTile == null)
+                {
+                    return false;
+                }
+                TileController foundController = foundTile.GetComponent<TileController>();
+                bool sameType = foundController.tileType == controller.tileType;
+                bool overhanging = ((Vector2Int)foundController.gridPos).x < tilePos.x || (((Vector2Int)foundController.gridPos).x + foundController.size.x - 1) > (tilePos.x + controller.size.x - 1);
+                if (!sameType || overhanging)
+                {
+                    return false;
+                }
+            }
+        }
+        else if (direction == "up")
+        {
+            for (int pos = tilePos.x; pos < tilePos.x + controller.size.x; pos++)
+            {
+                GameObject foundTile = GetTileAt(new Vector2Int(pos, tilePos.y + controller.size.y));
+                if (foundTile == null)
+                {
+                    return false;
+                }
+                TileController foundController = foundTile.GetComponent<TileController>();
+                bool sameType = foundController.tileType == controller.tileType;
+                bool overhanging = ((Vector2Int)foundController.gridPos).x < tilePos.x || (((Vector2Int)foundController.gridPos).x + foundController.size.x - 1) > (tilePos.x + controller.size.x - 1);
+                if (!sameType || overhanging)
+                {
+                    return false;
+                }
+            }
+        }
+        else if (direction == "left")
+        {
+            for (int pos = tilePos.y; pos < tilePos.y + controller.size.y; pos++)
+            {
+                GameObject foundTile = GetTileAt(new Vector2Int(tilePos.x - 1, pos));
+                if (foundTile == null)
+                {
+                    return false;
+                }
+                TileController foundController = foundTile.GetComponent<TileController>();
+                bool sameType = foundController.tileType == controller.tileType;
+                bool overhanging = ((Vector2Int)foundController.gridPos).y < tilePos.y || (((Vector2Int)foundController.gridPos).y + foundController.size.y - 1) > (tilePos.y + controller.size.y - 1);
+                if (!sameType || overhanging)
+                {
+                    return false;
+                }
+            }
+        }
+        else if (direction == "right")
+        {
+            for (int pos = tilePos.y; pos < tilePos.y + controller.size.y; pos++)
+            {
+                GameObject foundTile = GetTileAt(new Vector2Int(tilePos.x + controller.size.x, pos));
+                if (foundTile == null)
+                {
+                    return false;
+                }
+                TileController foundController = foundTile.GetComponent<TileController>();
+                bool sameType = foundController.tileType == controller.tileType;
+                bool overhanging = ((Vector2Int)foundController.gridPos).y < tilePos.y || (((Vector2Int)foundController.gridPos).y + foundController.size.y - 1) > (tilePos.y + controller.size.y - 1);
+                if (!sameType || overhanging)
+                {
+                    return false;
+                }
+            }
+        }
+        else
+        {
+            throw new Exception("CanJoin only accepts directions \"up\", \"down\", \"left\" and \"right\"");
+        }
+        return true;
+    }
 
     public Vector2 worldPosToGridPos(Vector2 worldPos, Vector2Int size) // forwards is x
     {

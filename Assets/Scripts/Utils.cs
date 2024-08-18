@@ -89,4 +89,25 @@ static class Utils
         }
         throw new System.Exception("Weighted random ran out of possible values before finding one that fitted with random number generated");
     }
+
+    public static string InvertDirection(string direction)
+    {
+        switch (direction)
+        {
+            case "up":
+                return "down";
+
+            case "down":
+                return "up";
+
+            case "left":
+                return "right";
+
+            case "right":
+                return "left";
+
+            default:
+                throw new System.Exception("InvertDirection only accepts directions \"up\", \"down\", \"left\" and \"right\"");
+        }
+    }
 }

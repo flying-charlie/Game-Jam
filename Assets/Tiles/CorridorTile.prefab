@@ -143,5 +143,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5fdf82328b0056439a03b20ffbc7bdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Mass: 0
+  Mass: 1
   size: {x: 1, y: 1}
+  tileType: Corridor
