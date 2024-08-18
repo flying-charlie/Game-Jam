@@ -47,6 +47,9 @@ public class Config : MonoBehaviour
 
         #region Guns
         gunCfg.Add("basic", new GunConfig(){
+            damageScale = 1.1f,
+            rangeScale = 0.6f,
+            reloadScale = 0.1f,
             reloadTime = 1,
             rotationSpeed = 0.5F,
             fireAngleTolerance = 10,
@@ -61,6 +64,9 @@ public class Config : MonoBehaviour
         });
 
         gunCfg.Add("railgun", new GunConfig(){
+            damageScale = 1.1f,
+            rangeScale = 0.5f,
+            reloadScale = 0.9f,
             reloadTime = 5,
             rotationSpeed = 0.3F,
             fireAngleTolerance = 10,
@@ -75,6 +81,9 @@ public class Config : MonoBehaviour
         });
 
         gunCfg.Add("laser", new GunConfig(){
+            damageScale = 1.2f,
+            rangeScale = 0.5f,
+            reloadScale = 0f,
             reloadTime = 0.01f,
             rotationSpeed = 0.5F,
             fireAngleTolerance = 10,
@@ -89,6 +98,9 @@ public class Config : MonoBehaviour
         });
 
         gunCfg.Add("shotgun", new GunConfig(){
+            damageScale = 1.3f,
+            rangeScale = 0.6f,
+            reloadScale = -0.1f,
             reloadTime = 2,
             rotationSpeed = 0.7F,
             fireAngleTolerance = 10,
