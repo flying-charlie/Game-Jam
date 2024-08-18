@@ -57,6 +57,8 @@ public class ShipController : MonoBehaviour
         m_maxSpeed = (config.maxSpeedScale / m_mass * m_thrust) + config.maxSpeedMin;
         m_rotationSpeed = (config.rotationScale / m_mass * m_thrust) + config.rotationMin;
         m_maxRotationSpeed = m_rotationSpeed * 90;
+
+        Camera.main.orthographicSize = m_mass*0.1f+10;
     }
 
     void FixedUpdate()
