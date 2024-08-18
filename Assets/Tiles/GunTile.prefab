@@ -260,7 +260,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d53801c8c414384fa03b4f6852faad1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Mass: 1
   size: {x: 1, y: 1}
+  tileType: BasicGun
   configId: basic
 --- !u!1 &7878615359729854502
 GameObject:

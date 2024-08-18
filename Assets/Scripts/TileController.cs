@@ -1,17 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.WebSockets;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
+using UnityEngine.Tilemaps;
 
 public class TileController : MonoBehaviour // , Tiling.iTile
 {
     GameObject m_ship;
     ShipController m_shipController;
     public Vector2Int? gridPos = null; //bottom left
-    public int Mass;
+    public int Mass = 1;
     bool dragging = false;
     public Vector2Int size = new Vector2Int(1, 1);
+    public string tileType;
 
 
     protected virtual void OnMouseDrag()
@@ -35,18 +40,18 @@ public class TileController : MonoBehaviour // , Tiling.iTile
         Vector2 relativePos = m_shipController.worldPosToGridPos(transform.position, size);
         Vector2Int gridPos = new(Mathf.RoundToInt(relativePos.x), Mathf.RoundToInt(relativePos.y));
         Debug.Log("Attempting attach");
-        if (!m_shipController.gridPosIsFull(gridPos) && m_shipController.gridPosHasNeibours(gridPos))
+        if (!m_shipController.GridPosIsFull(gridPos) && m_shipController.GridPosHasNeibours(gridPos))
         {
             AttachAt(gridPos);
         }
         else
         {
             Debug.Log(gridPos);
-            if (m_shipController.gridPosIsFull(gridPos))
+            if (m_shipController.GridPosIsFull(gridPos))
             {
                 Debug.Log("Position full");
             }
-            if (!m_shipController.gridPosHasNeibours(gridPos))
+            if (!m_shipController.GridPosHasNeibours(gridPos))
             {
                 Debug.Log("No neibours");
             }
@@ -60,6 +65,7 @@ public class TileController : MonoBehaviour // , Tiling.iTile
         transform.localPosition = new Vector3(gridPos.x, gridPos.y);
         Utils.RotateTowardsLocal(transform, m_ship.transform.rotation.z, 1);
         m_shipController.OnMassChange();
+        DoJoining();
     }
 
     void Detach()
@@ -91,7 +97,7 @@ public class TileController : MonoBehaviour // , Tiling.iTile
         }
         m_ship = GameObject.FindGameObjectWithTag("ship");
         m_shipController = m_ship.GetComponent<ShipController>();
-        OnSizeChange();
+
     }
 
     // Update is called once per frame
@@ -109,7 +115,79 @@ public class TileController : MonoBehaviour // , Tiling.iTile
             transform.localPosition = new Vector3((float)(size.x - 1) / 2 + ((Vector2)gridPos).x, (float)(size.y - 1) / 2 + ((Vector2)gridPos).y);
         }
         Mass = size.x * size.y;
-        m_shipController.OnMassChange();
+    }
+
+    void DoJoining()
+    {
+        Dictionary<string, GameObject> neighbours = m_shipController.GetNeighbours((Vector2Int)gridPos);
+        GameObject maxMassTile = null;
+        string maxMassTileDirection = "";
+        int maxMass = 0;
+        foreach (KeyValuePair<string, GameObject> pair in neighbours)
+        {
+            if (pair.Value != null && pair.Value.GetComponent<TileController>().Mass > maxMass && m_shipController.CanJoin(pair.Value, Utils.InvertDirection(pair.Key)))
+            {
+                maxMass = pair.Value.GetComponent<TileController>().Mass;
+                maxMassTile = pair.Value;
+                maxMassTileDirection = pair.Key;
+            }
+        }
+        if (maxMassTile != null)
+        {
+            maxMassTile.GetComponent<TileController>().Join(Utils.InvertDirection(maxMassTileDirection));
+        }
+    }
+
+    public void Join(string direction)
+    {
+        Vector2Int tilePos = (Vector2Int)gridPos;
+        if (direction == "down")
+        {
+            for (int pos = tilePos.x; pos < tilePos.x + size.x; pos++)
+            {
+                GameObject foundTile = m_shipController.GetTileAt(new Vector2Int(pos, tilePos.y - 1));
+                Destroy(foundTile);
+            }
+            gridPos += Vector2Int.down;
+            size.y += 1;
+            OnSizeChange();
+        }
+        else if (direction == "up")
+        {
+            for (int pos = tilePos.x; pos < tilePos.x + size.x; pos++)
+            {
+                GameObject foundTile = m_shipController.GetTileAt(new Vector2Int(pos, tilePos.y + size.y));
+                Destroy(foundTile);
+            }
+            size.y += 1;
+            OnSizeChange();
+        }
+        else if (direction == "left")
+        {
+            for (int pos = tilePos.y; pos < tilePos.y + size.y; pos++)
+            {
+                GameObject foundTile = m_shipController.GetTileAt(new Vector2Int(tilePos.x - 1, pos));
+                Destroy(foundTile);
+            }
+            gridPos += Vector2Int.left;
+            size.x += 1;
+            OnSizeChange();
+        }
+        else if (direction == "right")
+        {
+            for (int pos = tilePos.y; pos < tilePos.y + size.y; pos++)
+            {
+                GameObject foundTile = m_shipController.GetTileAt(new Vector2Int(tilePos.x + size.x, pos));
+                Destroy(foundTile);
+            }
+            size.x += 1;
+            OnSizeChange();
+        }
+        else
+        {
+            throw new System.Exception("Join only accepts directions \"up\", \"down\", \"left\" and \"right\"");
+        }
+        DoJoining();
     }
 
     public virtual void attachedUpdate(TileUpdateData data) {}  //use this instead of update
@@ -123,11 +201,11 @@ public class TileController : MonoBehaviour // , Tiling.iTile
     // }}
 
     // public IEnumerable<Vector2Int> openConnections => throw new System.NotImplementedException();
-    void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.CompareTag("enemy"))
+        void OnCollisionEnter2D(Collision2D other)
         {
-            Destroy(gameObject);
+            if (other.gameObject.CompareTag("enemy"))
+            {
+                Destroy(gameObject);
+            }
         }
     }
-}
