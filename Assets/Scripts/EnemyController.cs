@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro.EditorUtilities;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    bool isDead = false;
+    float m_health;
     public string configId;
     float m_speed;
     GameObject m_ship;
@@ -15,6 +18,7 @@ public class EnemyController : MonoBehaviour
     {
         m_config = GameObject.FindGameObjectWithTag("config").GetComponent<Config>().enemyCfg[configId];
         m_ship = GameObject.FindGameObjectWithTag("ship");
+        m_health = m_config.enemyHealth;
     }
 
     // Update is called once per frame
@@ -41,9 +45,15 @@ public class EnemyController : MonoBehaviour
     {
         if (collision2D.gameObject.CompareTag("bullet"))
         {
-            DoDrop();
+            m_health -= collision2D.gameObject.GetComponent<BulletController>().damage;
+            if (m_health <= 0 && isDead == false)
+            {
+                isDead = true;
+                DoDrop();
+                Destroy(gameObject);
+            }
         }
-        if (!collision2D.gameObject.CompareTag("enemy"))
+        if (collision2D.gameObject.CompareTag("tile"))
         {
             Destroy(gameObject);
         }
@@ -61,6 +71,7 @@ public class EnemyController : MonoBehaviour
 
 public struct EnemyConfig
 {
+    public float enemyHealth;
     public float maxAcceleration;
     public float maxspeed;
     public float rotationalSpeed;

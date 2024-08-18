@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
+    public float damage;
     float despawnTime;
     public BulletConfig config;
 
@@ -11,6 +12,7 @@ public class BulletController : MonoBehaviour
     void Start()
     {
         // config = GameObject.FindGameObjectWithTag("config").GetComponent<Config>().bulletCfg[configId];
+        damage = config.damage;
     }
 
     // Update is called once per frame
