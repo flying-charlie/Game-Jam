@@ -60,6 +60,8 @@ public struct GunConfig
     public float reloadTime;
     public float rotationSpeed;
     public float fireAngleTolerance;
+    public float bulletSpreadAngle;
+    public float numberOfProjectiles;
     public GameObject bullet;
     public BulletConfig bulletConfig;
 }

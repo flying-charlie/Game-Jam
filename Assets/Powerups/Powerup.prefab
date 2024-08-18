@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 255381707267781117}
   - component: {fileID: 2337249950647460370}
   - component: {fileID: 4185237263315727995}
-  - component: {fileID: 16226149194511167}
+  - component: {fileID: 8394273172806523478}
   m_Layer: 0
   m_Name: Powerup
   m_TagString: powerup
@@ -121,7 +121,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!50 &16226149194511167
+--- !u!50 &8394273172806523478
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -135,7 +135,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 0.0001
   m_LinearDrag: 0
-  m_AngularDrag: 0
+  m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -147,4 +147,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
