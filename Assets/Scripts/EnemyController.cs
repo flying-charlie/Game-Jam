@@ -63,6 +63,7 @@ public class EnemyController : MonoBehaviour
         }
         if (collision2D.gameObject.CompareTag("tile"))
         {
+            collision2D.gameObject.GetComponent<TileController>().health -= m_config.ramDamage;
             Destroy(gameObject);
         }
     }
@@ -79,6 +80,7 @@ public class EnemyController : MonoBehaviour
 
 public struct EnemyConfig
 {
+    public float ramDamage;
     public float enemyHealth;
     public float maxAcceleration;
     public float maxspeed;

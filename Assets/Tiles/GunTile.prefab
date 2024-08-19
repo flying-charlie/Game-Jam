@@ -263,7 +263,7 @@ MonoBehaviour:
   Mass: 1
   size: {x: 1, y: 1}
   tileType: BasicGun
-  configId: basic
+  configId: basicGun
 --- !u!1 &7878615359729854502
 GameObject:
   m_ObjectHideFlags: 0

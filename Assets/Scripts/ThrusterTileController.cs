@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class ThrusterController : TileController
 {
-    public string configId;
     ThrusterConfig m_config;
     public float thrust {get => m_config.thrust;}
 
