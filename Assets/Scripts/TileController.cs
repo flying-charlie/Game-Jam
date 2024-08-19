@@ -60,11 +60,11 @@ public class TileController : MonoBehaviour // , Tiling.iTile
             for (int j = 0; j < size.y; j++)
             {
                 Vector2Int position = gridPos + new Vector2Int(i, j);
-                if (m_shipController.GridPosIsFull(gridPos))
+                if (m_shipController.GridPosIsFull(position))
                 {
                     return false;
                 }
-                if (m_shipController.GridPosHasNeibours(gridPos))
+                if (m_shipController.GridPosHasNeibours(position))
                 {
                     hasAttachableNeighbors = true;
                 } 
@@ -82,6 +82,7 @@ public class TileController : MonoBehaviour // , Tiling.iTile
         m_shipController.OnMassChange();
         DoJoining();
         OnSizeChange();
+        despawning = false;
     }
 
     void Detach()
