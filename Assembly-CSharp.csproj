@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\CoreController.cs" />
     <Compile Include="Assets\Scripts\SpeedPowerupController.cs" />
     <Compile Include="Assets\Scripts\GunController.cs" />
+    <Compile Include="Assets\Scripts\BackgroundController.cs" />
     <Compile Include="Assets\Scripts\BaseTypes.cs" />
     <Compile Include="Assets\Scripts\BulletController.cs" />
     <Compile Include="Assets\Scripts\EnemyController.cs" />
