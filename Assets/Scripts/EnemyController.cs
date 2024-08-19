@@ -59,6 +59,7 @@ public class EnemyController : MonoBehaviour
                 m_animator.SetTrigger("Death");
                 GetComponent<CircleCollider2D>().enabled = false;
                 GetComponent<Rigidbody2D>().isKinematic = true;
+                GameObject.FindGameObjectWithTag("scoreManager").GetComponent<ScoreManager>().IncreaseScore(200);
             }
         }
         if (collision2D.gameObject.CompareTag("tile"))

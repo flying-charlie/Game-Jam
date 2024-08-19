@@ -19,4 +19,9 @@ public class CoreController : TileController
     {
 
     }
+
+    void OnDestroy()
+    {
+        GameObject.FindGameObjectWithTag("scoreManager").GetComponent<ScoreManager>().GameOver();
+    }
 }

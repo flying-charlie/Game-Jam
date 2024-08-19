@@ -101,6 +101,8 @@ public class TileController : MonoBehaviour // , Tiling.iTile
     // Start is called before the first frame update
     protected void Start()
     {
+        m_ship = GameObject.FindGameObjectWithTag("ship");
+        m_shipController = m_ship.GetComponent<ShipController>();
         if (transform.parent == null)
         {
             transform.Rotate(Vector3.forward, Random.Range((float)0, (float)360));
@@ -108,9 +110,8 @@ public class TileController : MonoBehaviour // , Tiling.iTile
         else
         {
             gridPos = new Vector2Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y));
+            m_shipController.OnMassChange();
         }
-        m_ship = GameObject.FindGameObjectWithTag("ship");
-        m_shipController = m_ship.GetComponent<ShipController>();
         m_tileConfig = GameObject.FindGameObjectWithTag("config").GetComponent<Config>().tileCfg[configId];
         maxHealth = m_tileConfig.maxHealth;
         health = maxHealth;
@@ -209,6 +210,7 @@ public class TileController : MonoBehaviour // , Tiling.iTile
         {
             throw new System.Exception("Join only accepts directions \"up\", \"down\", \"left\" and \"right\"");
         }
+        GameObject.FindGameObjectWithTag("scoreManager").GetComponent<ScoreManager>().IncreaseScore(mass * 500);
         DoJoining();
     }
 

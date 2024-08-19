@@ -11,6 +11,7 @@ using Unity.VisualScripting;
 using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 using UnityEngine.Diagnostics;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
 

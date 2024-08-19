@@ -11,6 +11,8 @@ TagManager:
   - config
   - bullet
   - powerup
+  - canvas
+  - scoreManager
   layers:
   - Default
   - TransparentFX
