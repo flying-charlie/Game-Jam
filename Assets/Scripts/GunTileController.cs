@@ -57,7 +57,7 @@ public class GunTileController : TileController
     void Fire()
     {
         timeSinceLastFire = 0;
-        m_gunController.Fire(config, config.bulletConfig);
+        m_gunController.Fire(config, config.bulletConfig, mass);
     }
 }
 
