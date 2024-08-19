@@ -89,7 +89,7 @@ public class Config : MonoBehaviour
             fireAngleTolerance = 10,
             bulletSpreadAngle = 0,
             numberOfProjectiles = 1,
-            bullet = railgunBullet,
+            bullet = laserBullet,
             bulletConfig = new BulletConfig(){
                 speed = 100,
                 damage = 0.1f,
@@ -106,7 +106,7 @@ public class Config : MonoBehaviour
             fireAngleTolerance = 10,
             bulletSpreadAngle = 60,
             numberOfProjectiles = 20,
-            bullet = railgunBullet,
+            bullet = shotgunBullet,
             bulletConfig = new BulletConfig(){
                 speed = 10,
                 damage = 0.7f,

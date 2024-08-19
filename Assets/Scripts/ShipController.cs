@@ -265,10 +265,17 @@ public class ShipController : MonoBehaviour
         return true;
     }
 
-    public Vector2 worldPosToGridPos(Vector2 worldPos, Vector2Int size) // forwards is x
+    /// <summary>
+    /// Convert an absolute block position to a grid pos, taking into account the fact that absolute positions are based on the middle of the block.
+    /// </summary>
+    /// <param name="worldPos">The absolute position of the center of the block.</param>
+    /// <param name="size">The size of the block.</param>
+    /// <returns>A grid position.</returns>
+    public Vector2Int worldPosToGridPos(Vector2 worldPos, Vector2Int size) // forwards is x
     {
-        Vector2 correctedWorldPos = worldPos - new Vector2((float)(size.x - 1) / 2, (float)(size.y - 1) / 2);
-        return transform.InverseTransformPoint(correctedWorldPos);
+        Vector2 shipPos = transform.InverseTransformPoint(worldPos);
+        Vector2 blockOriginPos = shipPos - new Vector2((float)(size.x - 1) / 2, (float)(size.y - 1) / 2);
+        return Vector2Int.RoundToInt(blockOriginPos);
     }
 
     public void tempWeaponStatIncrease(string stat, float multiplier, float duration)

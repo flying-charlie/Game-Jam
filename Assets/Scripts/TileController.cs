@@ -36,26 +36,35 @@ public class TileController : MonoBehaviour // , Tiling.iTile
 
     protected virtual void OnEndDrag()
     {
-        Debug.Log("Drag ended");
-        Vector2 relativePos = m_shipController.worldPosToGridPos(transform.position, size);
-        Vector2Int gridPos = new(Mathf.RoundToInt(relativePos.x), Mathf.RoundToInt(relativePos.y));
-        Debug.Log("Attempting attach");
-        if (!m_shipController.GridPosIsFull(gridPos) && m_shipController.GridPosHasNeibours(gridPos))
+        Vector2Int gridPos = m_shipController.worldPosToGridPos(transform.position, size);
+
+        if (IsAttachable(gridPos))
         {
             AttachAt(gridPos);
         }
-        else
+    }
+
+
+
+    bool IsAttachable(Vector2Int gridPos) // TODO This currently allows joining to the botton of thruster tiles.
+    {
+        bool hasAttachableNeighbors = false;
+        for (int i = 0; i < size.x; i++)
         {
-            Debug.Log(gridPos);
-            if (m_shipController.GridPosIsFull(gridPos))
+            for (int j = 0; j < size.y; j++)
             {
-                Debug.Log("Position full");
-            }
-            if (!m_shipController.GridPosHasNeibours(gridPos))
-            {
-                Debug.Log("No neibours");
+                Vector2Int position = gridPos + new Vector2Int(i, j);
+                if (m_shipController.GridPosIsFull(gridPos))
+                {
+                    return false;
+                }
+                if (m_shipController.GridPosHasNeibours(gridPos))
+                {
+                    hasAttachableNeighbors = true;
+                } 
             }
         }
+        return hasAttachableNeighbors;
     }
 
     void AttachAt(Vector2Int gridPos)
@@ -66,6 +75,7 @@ public class TileController : MonoBehaviour // , Tiling.iTile
         Utils.RotateTowardsLocal(transform, m_ship.transform.rotation.z, 1);
         m_shipController.OnMassChange();
         DoJoining();
+        OnSizeChange();
     }
 
     void Detach()
