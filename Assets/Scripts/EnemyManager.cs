@@ -7,11 +7,14 @@ public class EnemyManager : MonoBehaviour
 {
     GameObject m_ship;
     EnemySpawnConfig m_config;
+    Dictionary<GameObject, float> SpawnRates;
+
     // Start is called before the first frame update
     void Start()
     {
         m_config = GameObject.FindGameObjectWithTag("config").GetComponent<Config>().enemySpawnCfg;
         m_ship = GameObject.FindGameObjectWithTag("ship");
+        SpawnRates = m_config.SpawnRates;
     }
 
     // Update is called once per frame
@@ -22,12 +25,19 @@ public class EnemyManager : MonoBehaviour
 
     void FixedUpdate()
     {
+        ScaleSpawning();
         DoEnemySpawning();
+    }
+
+    void ScaleSpawning()
+    {
+
     }
 
     void DoEnemySpawning()
     {
-        if (Random.Range(0.0F, 1.0F) < m_config.enemySpawnChance)
+        foreach (KeyValuePair<GameObject, float> enemyRate in m_config.SpawnRates)
+        if (Random.Range(0.0F, 1.0F) < enemyRate.Value * Time.deltaTime * Mathf.Pow(Time.fixedTime + m_config.initialScale, m_config.spawnScaling))
         {
             Vector2 enemyPosition;
             do
@@ -35,7 +45,7 @@ public class EnemyManager : MonoBehaviour
                 enemyPosition = new Vector2(Random.Range(-m_config.enemySpawnWidth/2, m_config.enemySpawnWidth/2), Random.Range(-m_config.enemySpawnHeight/2, m_config.enemySpawnHeight/2));
             }
             while ((enemyPosition - (Vector2)m_ship.transform.position).magnitude < m_config.safeZone);
-            Instantiate(m_config.enemy, enemyPosition, Quaternion.identity);
+            Instantiate(enemyRate.Key, enemyPosition, Quaternion.identity);
         }
     }
 }
@@ -45,6 +55,7 @@ public struct EnemySpawnConfig
     public float safeZone;
     public float enemySpawnWidth;
     public float enemySpawnHeight;
-    public float enemySpawnChance;
-    public GameObject enemy;
+    public Dictionary<GameObject, float> SpawnRates;
+    public float spawnScaling;
+    public float initialScale;
 }
