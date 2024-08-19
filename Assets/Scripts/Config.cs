@@ -34,8 +34,11 @@ public class Config : MonoBehaviour
             safeZone = 10,
             enemySpawnHeight = 60,
             enemySpawnWidth = 80,
-            enemySpawnChance = 0.05F,
-            enemy = basicEnemy
+            spawnScaling = 1.1F,
+            initialScale = 40,
+            SpawnRates = new Dictionary<GameObject, float>(){
+                {basicEnemy, 0.01F}
+            }
         };
 
         shipCfg = new(){
