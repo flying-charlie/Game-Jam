@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    Animator m_animator;
     bool isDead = false;
     float m_health;
     public string configId;
@@ -16,6 +17,7 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        m_animator = GetComponent<Animator>();
         m_config = GameObject.FindGameObjectWithTag("config").GetComponent<Config>().enemyCfg[configId];
         m_ship = GameObject.FindGameObjectWithTag("ship");
         m_health = m_config.enemyHealth;
@@ -24,7 +26,11 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (isDead && !Utils.AnimatorIsPlaying(m_animator) && m_animator.GetCurrentAnimatorStateInfo(0).IsName("Base.Dieing"))
+        {
+            DoDrop();
+            Destroy(gameObject);
+        }
     }
 
     void FixedUpdate()
@@ -41,6 +47,7 @@ public class EnemyController : MonoBehaviour
 
         transform.position += transform.right * Time.deltaTime * m_speed;
     }
+
     void OnCollisionEnter2D(Collision2D collision2D)
     {
         if (collision2D.gameObject.CompareTag("bullet"))
@@ -49,8 +56,7 @@ public class EnemyController : MonoBehaviour
             if (m_health <= 0 && isDead == false)
             {
                 isDead = true;
-                DoDrop();
-                Destroy(gameObject);
+                m_animator.SetTrigger("Death");
             }
         }
         if (collision2D.gameObject.CompareTag("tile"))
