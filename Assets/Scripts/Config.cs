@@ -88,7 +88,7 @@ public class Config : MonoBehaviour
             numberOfProjectiles = 1,
             bullet = basicBullet,
             bulletConfig = new BulletConfig(){
-                speed = 7,
+                speed = 14,
                 damage = 5,
                 duration = 3
             }
@@ -105,7 +105,7 @@ public class Config : MonoBehaviour
             numberOfProjectiles = 1,
             bullet = railgunBullet,
             bulletConfig = new BulletConfig(){
-                speed = 35,
+                speed = 40,
                 damage = 50,
                 duration = 3
             }
@@ -120,9 +120,9 @@ public class Config : MonoBehaviour
             fireAngleTolerance = 10,
             bulletSpreadAngle = 0,
             numberOfProjectiles = 1,
-            bullet = railgunBullet,
+            bullet = laserBullet,
             bulletConfig = new BulletConfig(){
-                speed = 100,
+                speed = 70,
                 damage = 0.1f,
                 duration = 0.1f
             }
@@ -135,11 +135,11 @@ public class Config : MonoBehaviour
             reloadTime = 2,
             rotationSpeed = 0.7F,
             fireAngleTolerance = 10,
-            bulletSpreadAngle = 60,
+            bulletSpreadAngle = 40,
             numberOfProjectiles = 20,
-            bullet = railgunBullet,
+            bullet = shotgunBullet,
             bulletConfig = new BulletConfig(){
-                speed = 10,
+                speed = 20,
                 damage = 0.7f,
                 duration = 1.2f
             }
@@ -188,6 +188,6 @@ public class Config : MonoBehaviour
                 multiplier = 2
             });
         #endregion
-
+        
     }
 }
