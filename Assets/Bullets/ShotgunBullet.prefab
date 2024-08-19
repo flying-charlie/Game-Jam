@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1860188413929976240}
   - component: {fileID: 2146630723698104387}
   m_Layer: 0
-  m_Name: LaserBullet
+  m_Name: ShotgunBullet
   m_TagString: bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -88,12 +88,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c33ef769dc623054e837bc2ba6044aba, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5403c01e3118cbb41b5d15e17cc3f570, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 2.4, y: 0.3}
+  m_Size: {x: 1, y: 0.3}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -135,12 +135,12 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 11.23, y: 4.43}
-    newSize: {x: 2.4, y: 0.3}
+    oldSize: {x: 6.85, y: 1.54}
+    newSize: {x: 1, y: 0.3}
     adaptiveTilingThreshold: 0.5
     drawMode: 1
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.4, y: 0.3}
+  m_Size: {x: 1, y: 0.3}
   m_EdgeRadius: 0
