@@ -38,7 +38,7 @@ public class BulletController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision2D)
     {
-        if (!collision2D.gameObject.CompareTag("powerup") && !collision2D.gameObject.CompareTag("tile"))
+        if (collision2D.gameObject.CompareTag("enemy"))
         {
             float enemyHealth = collision2D.gameObject.GetComponent<EnemyController>().m_health;
             collision2D.gameObject.GetComponent<EnemyController>().m_health -= damage;
@@ -51,6 +51,20 @@ public class BulletController : MonoBehaviour
             {
                 Destroy(gameObject);
             }
+        }
+        if (collision2D.gameObject.CompareTag("asteroid"))
+        {
+            float asteroidHealth = collision2D.gameObject.GetComponent<AsteroidController>().health;
+            collision2D.gameObject.GetComponent<AsteroidController>().health -= damage;
+            collision2D.gameObject.GetComponent<AsteroidController>().OnHealthChange();
+            if (damage > asteroidHealth)
+            {
+                damage -= asteroidHealth;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }            
         }
     }
 }

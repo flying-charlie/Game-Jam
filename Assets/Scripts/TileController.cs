@@ -252,6 +252,10 @@ public class TileController : MonoBehaviour // , Tiling.iTile
                     Destroy(gameObject);
                 }
             }
+            if (other.gameObject.CompareTag("asteroid"))
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
