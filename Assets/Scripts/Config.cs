@@ -35,7 +35,7 @@ public class Config : MonoBehaviour
             enemySpawnHeight = 60,
             enemySpawnWidth = 80,
             spawnScaling = 1.1F,
-            initialScale = 40,
+            initialScale = 60,
             SpawnRates = new Dictionary<GameObject, float>(){
                 {basicEnemy, 0.01F}
             }
