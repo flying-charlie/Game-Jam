@@ -10,10 +10,14 @@ using UnityEngine.Tilemaps;
 
 public class TileController : MonoBehaviour // , Tiling.iTile
 {
+    public string configId;
+    TileConfig m_tileConfig;
     GameObject m_ship;
     ShipController m_shipController;
     public Vector2Int? gridPos = null; //bottom left
-    public int Mass = 1;
+    public int mass = 1;
+    public float health;
+    public float maxHealth = 0;
     bool dragging = false;
     public Vector2Int size = new Vector2Int(1, 1);
     public string tileType;
@@ -97,7 +101,9 @@ public class TileController : MonoBehaviour // , Tiling.iTile
         }
         m_ship = GameObject.FindGameObjectWithTag("ship");
         m_shipController = m_ship.GetComponent<ShipController>();
-
+        m_tileConfig = GameObject.FindGameObjectWithTag("config").GetComponent<Config>().tileCfg[configId];
+        maxHealth = m_tileConfig.maxHealth;
+        health = maxHealth;
     }
 
     // Update is called once per frame
@@ -114,7 +120,9 @@ public class TileController : MonoBehaviour // , Tiling.iTile
         {
             transform.localPosition = new Vector3((float)(size.x - 1) / 2 + ((Vector2)gridPos).x, (float)(size.y - 1) / 2 + ((Vector2)gridPos).y);
         }
-        Mass = size.x * size.y;
+        mass = size.x * size.y;
+
+        maxHealth = mass * m_tileConfig.maxHealth;
     }
 
     void DoJoining()
@@ -125,9 +133,9 @@ public class TileController : MonoBehaviour // , Tiling.iTile
         int maxMass = 0;
         foreach (KeyValuePair<string, GameObject> pair in neighbours)
         {
-            if (pair.Value != null && pair.Value.GetComponent<TileController>().Mass > maxMass && m_shipController.CanJoin(pair.Value, Utils.InvertDirection(pair.Key)))
+            if (pair.Value != null && pair.Value.GetComponent<TileController>().mass > maxMass && m_shipController.CanJoin(pair.Value, Utils.InvertDirection(pair.Key)))
             {
-                maxMass = pair.Value.GetComponent<TileController>().Mass;
+                maxMass = pair.Value.GetComponent<TileController>().mass;
                 maxMassTile = pair.Value;
                 maxMassTileDirection = pair.Key;
             }
@@ -146,6 +154,7 @@ public class TileController : MonoBehaviour // , Tiling.iTile
             for (int pos = tilePos.x; pos < tilePos.x + size.x; pos++)
             {
                 GameObject foundTile = m_shipController.GetTileAt(new Vector2Int(pos, tilePos.y - 1));
+                health += foundTile.GetComponent<TileController>().health;
                 Destroy(foundTile);
             }
             gridPos += Vector2Int.down;
@@ -157,6 +166,7 @@ public class TileController : MonoBehaviour // , Tiling.iTile
             for (int pos = tilePos.x; pos < tilePos.x + size.x; pos++)
             {
                 GameObject foundTile = m_shipController.GetTileAt(new Vector2Int(pos, tilePos.y + size.y));
+                health += foundTile.GetComponent<TileController>().health;
                 Destroy(foundTile);
             }
             size.y += 1;
@@ -167,6 +177,7 @@ public class TileController : MonoBehaviour // , Tiling.iTile
             for (int pos = tilePos.y; pos < tilePos.y + size.y; pos++)
             {
                 GameObject foundTile = m_shipController.GetTileAt(new Vector2Int(tilePos.x - 1, pos));
+                health += foundTile.GetComponent<TileController>().health;
                 Destroy(foundTile);
             }
             gridPos += Vector2Int.left;
@@ -178,6 +189,7 @@ public class TileController : MonoBehaviour // , Tiling.iTile
             for (int pos = tilePos.y; pos < tilePos.y + size.y; pos++)
             {
                 GameObject foundTile = m_shipController.GetTileAt(new Vector2Int(tilePos.x + size.x, pos));
+                health += foundTile.GetComponent<TileController>().health;
                 Destroy(foundTile);
             }
             size.x += 1;
@@ -205,7 +217,16 @@ public class TileController : MonoBehaviour // , Tiling.iTile
         {
             if (other.gameObject.CompareTag("enemy"))
             {
-                Destroy(gameObject);
+                if (health <= 0)
+                {
+                    Destroy(gameObject);
+                }
             }
         }
+    }
+
+    public struct TileConfig
+    {
+        public float maxHealth;
+        public float health;
     }

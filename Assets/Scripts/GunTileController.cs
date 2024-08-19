@@ -6,7 +6,6 @@ using UnityEngine.UIElements;
 
 public class GunTileController : TileController
 {   
-    public string configId;
     GunController m_gunController;
     GunConfig config;
     GunConfig baseConfig;
@@ -38,9 +37,9 @@ public class GunTileController : TileController
         float gunScale = Mathf.Min(size.x, size.y);
         transform.GetChild(1).transform.localScale = new Vector3(gunScale, gunScale);
 
-        config.bulletConfig.damage = baseConfig.bulletConfig.damage * Mathf.Pow(Mass, baseConfig.damageScale);
-        config.reloadTime = baseConfig.reloadTime / Mathf.Pow(Mass, baseConfig.reloadScale);
-        config.bulletConfig.duration = baseConfig.bulletConfig.duration * MathF.Pow(Mass, baseConfig.rangeScale);
+        config.bulletConfig.damage = baseConfig.bulletConfig.damage * Mathf.Pow(mass, baseConfig.damageScale);
+        config.reloadTime = baseConfig.reloadTime / Mathf.Pow(mass, baseConfig.reloadScale);
+        config.bulletConfig.duration = baseConfig.bulletConfig.duration * MathF.Pow(mass, baseConfig.rangeScale);
     }
 
     void DoFiring()

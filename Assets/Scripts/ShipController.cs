@@ -53,7 +53,7 @@ public class ShipController : MonoBehaviour
         {
             GameObject tile = transform.GetChild(i).gameObject;
             TileController tileController = tile.GetComponent<TileController>();
-            m_mass += tileController.Mass;
+            m_mass += tileController.mass;
         }
 
         m_thrust = 0;

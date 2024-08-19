@@ -9,6 +9,7 @@ public class Config : MonoBehaviour
     public Dictionary<string, ThrusterConfig> thrusterCfg = new();
     public Dictionary<string, EnemyConfig> enemyCfg = new();
     public Dictionary<string, PowerupConfig> powerupCfg = new();
+    public Dictionary<string, TileConfig> tileCfg = new(); 
     public EnemySpawnConfig enemySpawnCfg = new(); 
     public shipConfig shipCfg = new();
     public GameObject basicBullet;
@@ -45,8 +46,38 @@ public class Config : MonoBehaviour
         };
         #endregion
 
+        #region Tiles
+        tileCfg.Add("core", new TileConfig(){
+            maxHealth = 10,
+        });
+
+        tileCfg.Add("corridor", new TileConfig(){
+            maxHealth = 1,
+        });
+
+        tileCfg.Add("basicThruster", new TileConfig() {
+            maxHealth = 3,
+        });
+
+        tileCfg.Add("basicGun", new TileConfig(){
+            maxHealth = 3,
+        });
+
+        tileCfg.Add("railgun", new TileConfig(){
+            maxHealth = 4
+        });
+                
+        tileCfg.Add("laser", new TileConfig(){
+            maxHealth = 4,
+        });
+                
+        tileCfg.Add("shotgun", new TileConfig(){
+            maxHealth = 4,
+        });
+        #endregion
+
         #region Guns
-        gunCfg.Add("basic", new GunConfig(){
+        gunCfg.Add("basicGun", new GunConfig(){
             damageScale = 1.1f,
             rangeScale = 0.6f,
             reloadScale = 0.1f,
@@ -116,13 +147,14 @@ public class Config : MonoBehaviour
         #endregion
 
         #region Thrusters
-        thrusterCfg.Add("basic", new ThrusterConfig(){
+        thrusterCfg.Add("basicThruster", new ThrusterConfig(){
             thrust = 1
         });
         #endregion
 
         #region Enemies
         enemyCfg.Add("basic", new EnemyConfig(){
+            ramDamage = 1,
             maxAcceleration = 1,
             maxspeed = 0.5F,
             rotationalSpeed = 0.2F,
@@ -139,6 +171,7 @@ public class Config : MonoBehaviour
         enemyCfg["basic"].dropWeights.Add(shotgunGun, 1);
 
         enemyCfg.Add("firstEnemy", new EnemyConfig(){
+            ramDamage = 1,
             maxAcceleration = 1,
             maxspeed = 0.5F,
             rotationalSpeed = 0.2F,
