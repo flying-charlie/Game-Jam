@@ -27,6 +27,8 @@ public class Config : MonoBehaviour
 
     public void Awake()
     {
+        float tileDespawnTime = 30;
+
         #region General Config
         enemySpawnCfg = new(){
             safeZone = 10,
@@ -51,30 +53,37 @@ public class Config : MonoBehaviour
         #region Tiles
         tileCfg.Add("core", new TileConfig(){
             maxHealth = 10,
+            despawnTime = tileDespawnTime,
         });
 
         tileCfg.Add("corridor", new TileConfig(){
             maxHealth = 1,
+            despawnTime = tileDespawnTime,
         });
 
         tileCfg.Add("basicThruster", new TileConfig() {
             maxHealth = 3,
+            despawnTime = tileDespawnTime,
         });
 
         tileCfg.Add("basicGun", new TileConfig(){
             maxHealth = 3,
+            despawnTime = tileDespawnTime,
         });
 
         tileCfg.Add("railgun", new TileConfig(){
-            maxHealth = 4
+            maxHealth = 4,
+            despawnTime = tileDespawnTime,
         });
                 
         tileCfg.Add("laser", new TileConfig(){
             maxHealth = 4,
+            despawnTime = tileDespawnTime,
         });
                 
         tileCfg.Add("shotgun", new TileConfig(){
             maxHealth = 4,
+            despawnTime = tileDespawnTime,
         });
         #endregion
 

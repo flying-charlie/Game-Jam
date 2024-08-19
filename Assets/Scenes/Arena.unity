@@ -152,9 +152,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   basicBullet: {fileID: 4401392891142851056, guid: 31c79171c8208a448a0c7bc22a531b61, type: 3}
-  railgunBullet: {fileID: 4401392891142851056, guid: 31c79171c8208a448a0c7bc22a531b61, type: 3}
+  railgunBullet: {fileID: 4401392891142851056, guid: 3201518ced6122a47978635829b2c113, type: 3}
   laserBullet: {fileID: 4401392891142851056, guid: 1ddfb6135dfb14d4ca8abe31484130af, type: 3}
-  shotgunBullet: {fileID: 4401392891142851056, guid: 31c79171c8208a448a0c7bc22a531b61, type: 3}
+  shotgunBullet: {fileID: 4401392891142851056, guid: b41a5086715c1374dadd41f3f7863c5f, type: 3}
   basicGun: {fileID: 7559332283596750302, guid: e3817756b0391b3499359aca69523c59, type: 3}
   railgunGun: {fileID: 7559332283596750302, guid: ffe89a15f0e5ebf4ea407e35e580a8ec, type: 3}
   laserGun: {fileID: 7559332283596750302, guid: 7398191cdb98a2a498f3a5d19d9fc797, type: 3}

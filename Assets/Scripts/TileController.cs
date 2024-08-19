@@ -21,6 +21,8 @@ public class TileController : MonoBehaviour // , Tiling.iTile
     bool dragging = false;
     public Vector2Int size = new Vector2Int(1, 1);
     public string tileType;
+    float despawnTimer;
+    bool despawning;
 
 
     protected virtual void OnMouseDrag()
@@ -103,16 +105,19 @@ public class TileController : MonoBehaviour // , Tiling.iTile
     {
         m_ship = GameObject.FindGameObjectWithTag("ship");
         m_shipController = m_ship.GetComponent<ShipController>();
+        m_tileConfig = GameObject.FindGameObjectWithTag("config").GetComponent<Config>().tileCfg[configId];
         if (transform.parent == null)
         {
             transform.Rotate(Vector3.forward, Random.Range((float)0, (float)360));
+            despawnTimer = m_tileConfig.despawnTime;
+            despawning = true;
         }
         else
         {
             gridPos = new Vector2Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y));
             m_shipController.OnMassChange();
+            despawning = false;
         }
-        m_tileConfig = GameObject.FindGameObjectWithTag("config").GetComponent<Config>().tileCfg[configId];
         maxHealth = m_tileConfig.maxHealth;
         health = maxHealth;
     }
@@ -120,7 +125,19 @@ public class TileController : MonoBehaviour // , Tiling.iTile
     // Update is called once per frame
     void Update()
     {
-        
+        if (despawning)
+        {
+            despawnTimer -= Time.deltaTime;
+            if (despawnTimer < 0)
+            {
+                Destroy(gameObject);
+            }
+        }
+    }
+
+    void FixedUpdate()
+    {
+
     }
 
     protected virtual void OnSizeChange()
@@ -240,5 +257,5 @@ public class TileController : MonoBehaviour // , Tiling.iTile
     public struct TileConfig
     {
         public float maxHealth;
-        public float health;
+        public float despawnTime;
     }
