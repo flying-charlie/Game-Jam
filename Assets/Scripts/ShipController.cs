@@ -132,6 +132,10 @@ public class ShipController : MonoBehaviour
         }
         
         transform.position += transform.right * Time.deltaTime * m_speed;
+        if (transform.position.x < -config.playSpaceWidth / 2) {transform.position = new Vector2(-config.playSpaceWidth / 2, transform.position.y);}
+        else if (transform.position.x > config.playSpaceWidth / 2) {transform.position = new Vector2(config.playSpaceWidth / 2, transform.position.y);}
+        else if (transform.position.y < -config.playSpaceHeight / 2) {transform.position = new Vector2(transform.position.x, -config.playSpaceHeight / 2);}
+        else if (transform.position.y > config.playSpaceHeight / 2) {transform.position = new Vector2(transform.position.x, config.playSpaceHeight / 2);}
     }
 
     public bool GridPosHasNeibours(Vector2Int position)
@@ -320,4 +324,6 @@ public struct shipConfig
     public float accelerationMin;
     public float maxSpeedScale;
     public float maxSpeedMin;
+    public float playSpaceHeight;
+    public float playSpaceWidth;
 }

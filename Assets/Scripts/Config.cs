@@ -30,8 +30,8 @@ public class Config : MonoBehaviour
         #region General Config
         enemySpawnCfg = new(){
             safeZone = 10,
-            enemySpawnHeight = 40,
-            enemySpawnWidth = 60,
+            enemySpawnHeight = 60,
+            enemySpawnWidth = 80,
             enemySpawnChance = 0.05F,
             enemy = basicEnemy
         };
@@ -42,7 +42,9 @@ public class Config : MonoBehaviour
             accelerationScale = 1F,
             maxSpeedScale = 10F,
             accelerationMin = 1,
-            maxSpeedMin = 0.5F
+            maxSpeedMin = 0.5F,
+            playSpaceHeight = 60,
+            playSpaceWidth = 80
         };
         #endregion
 
