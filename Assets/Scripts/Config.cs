@@ -106,9 +106,9 @@ public class Config : MonoBehaviour
         });
 
         gunCfg.Add("railgun", new GunConfig(){
-            damageScale = 1.1f,
+            damageScale = 1.2f,
             rangeScale = 0.5f,
-            reloadScale = 0.9f,
+            reloadScale = 0.1f,
             reloadTime = 5,
             rotationSpeed = 0.3F,
             fireAngleTolerance = 10,
@@ -124,7 +124,7 @@ public class Config : MonoBehaviour
 
         gunCfg.Add("laser", new GunConfig(){
             damageScale = 1.2f,
-            rangeScale = 0.5f,
+            rangeScale = 0.6f,
             reloadScale = 0f,
             reloadTime = 0.01f,
             rotationSpeed = 0.5F,
@@ -170,16 +170,16 @@ public class Config : MonoBehaviour
             maxspeed = 0.5F,
             rotationalSpeed = 0.2F,
             enemyHealth = 10,
-            dropChance = 0.5F,
+            dropChance = 0.2F,
             dropWeights = new(){}
         });
-        enemyCfg["basic"].dropWeights.Add(basicGun, 1);
-        enemyCfg["basic"].dropWeights.Add(basicThruster, 1);
-        enemyCfg["basic"].dropWeights.Add(corridor, 2);
+        enemyCfg["basic"].dropWeights.Add(basicGun, 1.2f);
+        enemyCfg["basic"].dropWeights.Add(basicThruster, 1.8f);
+        enemyCfg["basic"].dropWeights.Add(corridor, 2.3f);
         enemyCfg["basic"].dropWeights.Add(speedPowerup, 0.1F); // should be more like 0.1
-        enemyCfg["basic"].dropWeights.Add(railgunGun, 1);
-        enemyCfg["basic"].dropWeights.Add(laserGun, 1);
-        enemyCfg["basic"].dropWeights.Add(shotgunGun, 1);
+        enemyCfg["basic"].dropWeights.Add(railgunGun, 1f);
+        enemyCfg["basic"].dropWeights.Add(laserGun, 1f);
+        enemyCfg["basic"].dropWeights.Add(shotgunGun, 1f);
 
         enemyCfg.Add("firstEnemy", new EnemyConfig(){
             ramDamage = 1,

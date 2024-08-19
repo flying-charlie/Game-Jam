@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using TMPro.EditorUtilities;
 using Unity.Mathematics;
 using Unity.VisualScripting;
@@ -9,7 +10,7 @@ public class EnemyController : MonoBehaviour
 {
     Animator m_animator;
     bool isDead = false;
-    float m_health;
+    public float m_health;
     public string configId;
     float m_speed;
     GameObject m_ship;
@@ -50,18 +51,6 @@ public class EnemyController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision2D)
     {
-        if (collision2D.gameObject.CompareTag("bullet"))
-        {
-            m_health -= collision2D.gameObject.GetComponent<BulletController>().damage;
-            if (m_health <= 0 && isDead == false)
-            {
-                isDead = true;
-                m_animator.SetTrigger("Death");
-                GetComponent<CircleCollider2D>().enabled = false;
-                GetComponent<Rigidbody2D>().isKinematic = true;
-                GameObject.FindGameObjectWithTag("scoreManager").GetComponent<ScoreManager>().IncreaseScore(200);
-            }
-        }
         if (collision2D.gameObject.CompareTag("tile"))
         {
             collision2D.gameObject.GetComponent<TileController>().health -= m_config.ramDamage;
@@ -75,6 +64,21 @@ public class EnemyController : MonoBehaviour
         {
             GameObject droppedItem = Utils.WeightedRandom<GameObject>(m_config.dropWeights);
             Instantiate(droppedItem, transform.position, quaternion.identity);
+        }
+    }
+
+    public void OnHealthChange()
+    {
+        if (m_health <= 0)
+        {
+            if (m_health <= 0 && isDead == false)
+            {
+                isDead = true;
+                m_animator.SetTrigger("Death");
+                GetComponent<CircleCollider2D>().enabled = false;
+                GetComponent<Rigidbody2D>().isKinematic = true;
+                GameObject.FindGameObjectWithTag("scoreManager").GetComponent<ScoreManager>().IncreaseScore(200);
+            }
         }
     }
 }
