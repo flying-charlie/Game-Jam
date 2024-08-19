@@ -40,15 +40,16 @@ public class BulletController : MonoBehaviour
     {
         if (!collision2D.gameObject.CompareTag("powerup") && !collision2D.gameObject.CompareTag("tile"))
         {
+            float enemyHealth = collision2D.gameObject.GetComponent<EnemyController>().m_health;
             collision2D.gameObject.GetComponent<EnemyController>().m_health -= damage;
             collision2D.gameObject.GetComponent<EnemyController>().OnHealthChange();
-            if (damage > collision2D.gameObject.GetComponent<EnemyController>().m_health)
+            if (damage > enemyHealth)
             {
-                damage -= collision2D.gameObject.GetComponent<EnemyController>().m_health;
+                damage -= enemyHealth;
             }
             else
             {
-            Destroy(gameObject);
+                Destroy(gameObject);
             }
         }
     }
