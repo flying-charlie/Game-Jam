@@ -8,7 +8,6 @@ using System.Runtime.CompilerServices;
 using System.Xml;
 using Unity.Collections;
 using Unity.VisualScripting;
-using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 using UnityEngine.Diagnostics;
 using UnityEngine.SceneManagement;
