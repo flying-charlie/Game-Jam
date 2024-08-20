@@ -34,7 +34,7 @@ public class Config : MonoBehaviour
         #region General Config
         enemySpawnCfg = new(){
             safeZone = 10,
-            safeZoneScaling = 0.2F,
+            safeZoneScaling = 0.15F,
             enemySpawnHeight = 60,
             enemySpawnWidth = 80,
             spawnScaling = 1.1F,

@@ -10,6 +10,7 @@ public class EnemyManager : MonoBehaviour
     GameObject m_ship;
     public EnemySpawnConfig m_config;
     Dictionary<GameObject, float> SpawnRates;
+    float safeZone;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +18,7 @@ public class EnemyManager : MonoBehaviour
         m_config = GameObject.FindGameObjectWithTag("config").GetComponent<Config>().enemySpawnCfg;
         m_ship = GameObject.FindGameObjectWithTag("ship");
         SpawnRates = m_config.SpawnRates;
+        safeZone = m_config.safeZone;
     }
 
     // Update is called once per frame
@@ -46,9 +48,14 @@ public class EnemyManager : MonoBehaviour
             {
                 enemyPosition = new Vector2(UnityEngine.Random.Range(-m_config.enemySpawnWidth/2, m_config.enemySpawnWidth/2), UnityEngine.Random.Range(-m_config.enemySpawnHeight/2, m_config.enemySpawnHeight/2));
             }
-            while ((enemyPosition - (Vector2)m_ship.transform.position).magnitude < m_config.safeZone);
+            while ((enemyPosition - (Vector2)m_ship.transform.position).magnitude < safeZone);
             Instantiate(enemyRate.Key, enemyPosition, Quaternion.identity);
         }
+    }
+
+    public void onShipMassChange()
+    {
+        safeZone = m_config.safeZoneScaling * GameObject.FindGameObjectWithTag("ship").GetComponent<ShipController>().m_mass + m_config.safeZone;
     }
 }
 

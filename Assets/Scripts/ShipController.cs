@@ -31,12 +31,14 @@ public class ShipController : MonoBehaviour
     bool m_powerupActive;
     public float m_thrust;
     public float GRID_SCALE;
+    public GameObject m_enemyManager;
 
 
     // Start is called before the first frame update
     void Start()
     {
         config = GameObject.FindGameObjectWithTag("config").GetComponent<Config>().shipCfg;
+        
         OnMassChange();
     }
 
@@ -75,7 +77,7 @@ public class ShipController : MonoBehaviour
 
         Camera.main.orthographicSize = m_mass*0.1f+10;
 
-        //gameObject.GetComponent<EnemyManager>().m_config.safeZone += gameObject.GetComponent<EnemyManager>().m_config.safeZoneScaling * m_mass;
+        m_enemyManager.GetComponent<EnemyManager>().onShipMassChange();
     }
 
     void FixedUpdate()
@@ -120,7 +122,6 @@ public class ShipController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
-            UnityEditor.EditorApplication.isPlaying = false;
         }
     }
 
