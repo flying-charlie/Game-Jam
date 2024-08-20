@@ -114,7 +114,7 @@ public class ShipController : MonoBehaviour
         m_inputs = new InputSet(){
             x = x,
             y = y,
-            firing = Input.GetKey("space"),
+            firing = Input.GetKey("space") || Input.GetMouseButton(0),
             mouseDirection = Utils.GetMouseAngleFrom(transform.position),
             mouseOnScreen = mouseOnScreen
             };
