@@ -52,20 +52,20 @@ public class BulletController : MonoBehaviour
                 Destroy(gameObject);
             }
         }
-        if (collision2D.gameObject.CompareTag("asteroid"))
-        {
-            float asteroidHealth = collision2D.gameObject.GetComponent<AsteroidController>().health;
-            collision2D.gameObject.GetComponent<AsteroidController>().health -= damage;
-            collision2D.gameObject.GetComponent<AsteroidController>().OnHealthChange();
-            if (damage > asteroidHealth)
-            {
-                damage -= asteroidHealth;
-            }
-            else
-            {
-                Destroy(gameObject);
-            }            
-        }
+        //if (collision2D.gameObject.CompareTag("asteroid"))
+        //{
+            //float asteroidHealth = collision2D.gameObject.GetComponent<AsteroidController>().health;
+            //collision2D.gameObject.GetComponent<AsteroidController>().health -= damage;
+            //collision2D.gameObject.GetComponent<AsteroidController>().OnHealthChange();
+            //if (damage > asteroidHealth)
+            //{
+                //damage -= asteroidHealth;
+            //}
+            //else
+            //{
+                //Destroy(gameObject);
+            //}            
+        //}
     }
 }
 

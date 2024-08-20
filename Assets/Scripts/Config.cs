@@ -12,6 +12,7 @@ public class Config : MonoBehaviour
     public Dictionary<string, TileConfig> tileCfg = new(); 
     public EnemySpawnConfig enemySpawnCfg = new(); 
     public shipConfig shipCfg = new();
+    //public asteroidSpawnConfig asteroidSpawnCfg = new();
     public GameObject basicBullet;
     public GameObject railgunBullet;
     public GameObject laserBullet;
@@ -24,6 +25,7 @@ public class Config : MonoBehaviour
     public GameObject corridor;
     public GameObject speedPowerup;
     public GameObject basicEnemy;
+    public GameObject bossEnemy;
 
     public void Awake()
     {
@@ -32,18 +34,20 @@ public class Config : MonoBehaviour
         #region General Config
         enemySpawnCfg = new(){
             safeZone = 10,
+            safeZoneScaling = 0.2F,
             enemySpawnHeight = 60,
             enemySpawnWidth = 80,
             spawnScaling = 1.1F,
             initialScale = 60,
             SpawnRates = new Dictionary<GameObject, float>(){
-                {basicEnemy, 0.01F}
+                {basicEnemy, 0.01F},
+                {bossEnemy, 0.001F}
             }
         };
 
         shipCfg = new(){
             rotationScale = 0.01F,
-            rotationMin = 0.05F,
+            rotationMin = 0.02F,
             accelerationScale = 1F,
             maxSpeedScale = 10F,
             accelerationMin = 1,
@@ -177,8 +181,8 @@ public class Config : MonoBehaviour
             dropWeights = new(){}
         });
         enemyCfg["basic"].dropWeights.Add(basicGun, 1.2f);
-        enemyCfg["basic"].dropWeights.Add(basicThruster, 1.8f);
-        enemyCfg["basic"].dropWeights.Add(corridor, 2.3f);
+        enemyCfg["basic"].dropWeights.Add(basicThruster, 2.5f);
+        enemyCfg["basic"].dropWeights.Add(corridor, 2.5f);
         enemyCfg["basic"].dropWeights.Add(speedPowerup, 0.1F); // should be more like 0.1
         enemyCfg["basic"].dropWeights.Add(railgunGun, 1f);
         enemyCfg["basic"].dropWeights.Add(laserGun, 1f);
@@ -194,6 +198,20 @@ public class Config : MonoBehaviour
             dropWeights = new(){}
         });
         enemyCfg["firstEnemy"].dropWeights.Add(basicGun, 1);
+
+        enemyCfg.Add("bossEnemy", new EnemyConfig(){
+            ramDamage = 10,
+            maxAcceleration = 1,
+            maxspeed = 0.75F,
+            rotationalSpeed = 0.2F,
+            enemyHealth = 100,
+            dropChance = 1F,
+            dropWeights = new(){}
+        });
+        enemyCfg["bossEnemy"].dropWeights.Add(railgunGun, 1f);
+        enemyCfg["bossEnemy"].dropWeights.Add(shotgunGun, 1f);
+        enemyCfg["bossEnemy"].dropWeights.Add(laserGun, 1f);
+        enemyCfg["bossEnemy"].dropWeights.Add(speedPowerup, 1f);
         #endregion
 
         #region Powerups (temporary)

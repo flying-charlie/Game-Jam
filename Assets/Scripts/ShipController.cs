@@ -20,7 +20,7 @@ public class ShipController : MonoBehaviour
     Vector2 m_targetVelocity;
     Vector2 m_velocity;
     float m_speed = 0;
-    float m_mass;
+    public float m_mass;
     shipConfig config;
     float m_maxAcceleration;
     float m_maxSpeed;
@@ -74,6 +74,8 @@ public class ShipController : MonoBehaviour
         m_maxRotationSpeed = m_rotationSpeed * 90;
 
         Camera.main.orthographicSize = m_mass*0.1f+10;
+
+        //gameObject.GetComponent<EnemyManager>().m_config.safeZone += gameObject.GetComponent<EnemyManager>().m_config.safeZoneScaling * m_mass;
     }
 
     void FixedUpdate()
@@ -114,6 +116,12 @@ public class ShipController : MonoBehaviour
             mouseDirection = Utils.GetMouseAngleFrom(transform.position),
             mouseOnScreen = mouseOnScreen
             };
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+            UnityEditor.EditorApplication.isPlaying = false;
+        }
     }
 
     /// <summary>
@@ -313,6 +321,7 @@ public class ShipController : MonoBehaviour
         m_speedMultiplier = 1;
         m_powerupActive = false;
     }
+
 }
 
 public struct shipConfig
